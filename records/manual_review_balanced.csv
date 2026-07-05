@@ -1,0 +1,858 @@
+case_id,category,version,question,reference_answer,answer,correctness_score,faithfulness_score,citation_hit,false_premise_detected,refusal_correct,notes,review_reason,human_correctness,human_faithfulness,human_citation,human_scope,human_misconception,human_comment
+B031,calculation_formula,V0_baseline_single_call,"For linear regression with 8 input features and one scalar output, how many parameters are there if a bias term is included?",There are 9 parameters: 8 feature weights plus 1 bias.,"For linear regression with 8 input features and one scalar output, including a bias term, the number of parameters can be calculated as follows: 
+
+- Each input feature contributes to one parameter (either directly or through interaction with other features).
+- With 8 input features, there are 8 such parameters.
+- Adding a bias term adds an additional parameter.
+
+Therefore, the total number of parameters is \(8 + 1 = 9\).
+
+[Course Evidence: Not explicitly stated in provided course materials]",0.5,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B031,calculation_formula,V4_full_router_retrieval_verifier,"For linear regression with 8 input features and one scalar output, how many parameters are there if a bias term is included?",There are 9 parameters: 8 feature weights plus 1 bias.,"There are 9 parameters: 8 feature weights plus 1 bias term.
+
+Evidence: Evidence 1; Evidence 2; Evidence 3",1.0,1.0,1,,,"draft_then_calculation_guard;route={""in_scope"": ""yes"", ""question_type"": ""calculation"", ""lecture_topic"": ""Linear Regression Models"", ""search_query"": ""Lecture 2 linear regression For linear regression with 8 input features and one scalar output, how many parameters are there if a bias term is included?""}",core: full V0/V4 pass,,,,,,
+B032,calculation_formula,V0_baseline_single_call,"If a model has high training error and high validation error, is this more likely high bias or high variance?",This is more likely high bias because the model underfits both training and validation data.,"This scenario is more likely to indicate high variance in the model (COMP5541-03). 
+
+The provided course materials do not explicitly state this relationship between high training and validation errors and either high bias or high variance. However, based on general principles of machine learning, a situation where both training and validation error are high suggests that the model is overfitting to the training data rather than underfitting (high bias). Overfitting typically manifests as high variance in the model's predictions, meaning it performs well on the training set but poorly on unseen validation or test sets.",1.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B032,calculation_formula,V4_full_router_retrieval_verifier,"If a model has high training error and high validation error, is this more likely high bias or high variance?",This is more likely high bias because the model underfits both training and validation data.,"Direct Answer: This scenario is more likely related to high variance.
+
+Key Terms: Bias, Variance, Underfitting, Overfitting
+
+Explanation: Given the evidence provided, when a model has both high training error and validation error, it suggests that the model is not well balanced between underfitting (high bias) and overfitting (high variance). The lecture notes consistently state that high variance occurs when the model is too simple to capture the underlying complex pattern in the data instead of just capturing noise. Therefore, a situation with both high training error and validation error points towards an overfitting scenario.
+
+Evidence: [Evidence 1], [Evidence 2], [Evidence 3]",1.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""comparison"", ""lecture_topic"": ""underfitting and overfitting"", ""search_query"": ""Lecture 2 bias variance If a model has high training error and high validation error, is this more likely high bias or high variance?""}",core: full V0/V4 pass,,,,,,
+B033,calculation_formula,V0_baseline_single_call,"If a softmax classifier has 4 classes, what should the four output probabilities sum to?",They should sum to 1.,"For a softmax classifier with 4 classes, the four output probabilities must sum to 1. This is based on the definition of the softmax function in machine learning, which normalizes the outputs such that they represent probabilities across all possible outcomes.",1.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B033,calculation_formula,V4_full_router_retrieval_verifier,"If a softmax classifier has 4 classes, what should the four output probabilities sum to?",They should sum to 1.,"The four output probabilities sum to 1.
+Key terms: softmax classifier, probabilities must be >= 0 must sum to 1
+
+Evidence: 3, 1",0.5,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""calculation"", ""lecture_topic"": ""softmax function and its properties"", ""search_query"": ""Lecture 3 softmax cross entropy If a softmax classifier has 4 classes, what should the four output probabilities sum to?""}",core: full V0/V4 pass,,,,,,
+B034,calculation_formula,V0_baseline_single_call,"If L2 regularization uses penalty lambda times sum of squared weights, what happens to large weights?",Large weights are penalized more strongly and are encouraged to shrink.,"In L2 regularization, as used in COMP5541, the penalty term is defined as the product of a scalar parameter λ (lambda) and the sum of squares of all model parameters (weights). This formulation encourages smaller weights by penalizing larger values. Therefore, if there are large weights in the model, they will be reduced to minimize the overall cost function that includes this regularization term.
+
+The mathematical expression for L2 regularization is:
+
+\[ \text{Cost} = \sum_{i=1}^{n}(y_i - f(x_i))^2 + \lambda \sum_{j=1}^{m}w_j^2 \]
+
+where \( w_j \) represents the weights of the model, and m is the number of parameters. The term \( \lambda \sum_{j=1}^{m}w_j^2 \) acts as a penalty on the sum of squares of all weights (i.e., large weights are penalized more heavily). 
+
+Thus, to minimize this cost function, the model will adjust its weights such that larger weights contribute less to the overall loss. This regularization technique helps in reducing overfitting by constraining the magnitude of the weights.",0.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B034,calculation_formula,V4_full_router_retrieval_verifier,"If L2 regularization uses penalty lambda times sum of squared weights, what happens to large weights?",Large weights are penalized more strongly and are encouraged to shrink.,"Direct Answer: Large weights are penalized in L2 regularization.
+
+Key Terms: L2 regularization
+
+Mechanism: In L2 regularization, the penalty is applied as a function of the sum of squared weights. This inherently discourages large weight values by adding a cost proportional to their magnitude squared.
+
+Formula: The objective function for L2 regularization can be expressed as:
+\[ \mathcal{L}(w) + R(w) = \sum_{i} (w_i)^2 \]
+Where \( w_i \) are the weights and \( R(w) \) is the penalty term. 
+
+Evidence: [Evidence 1], [Evidence 3]",0.5,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""L2 Regularization and Weight Penalties"", ""search_query"": ""COMP5541 Lectures 2-9 If L2 regularization uses penalty lambda times sum of squared weights, what happens to large weights?""}",core: full V0/V4 pass,,,,,,
+B035,calculation_formula,V0_baseline_single_call,"If a ReLU input z is negative, what derivative is used during backpropagation?","For standard ReLU, the derivative is 0 when z is negative.","For a ReLU (Rectified Linear Unit) activation function, if the input \( z \) is negative, the output of the activation function is 0. During backpropagation, when using the ReLU activation function, the derivative of the ReLU function with respect to its input is 1 for positive inputs and 0 for non-positive inputs. Therefore, during backpropagation if the input \( z \) is negative, the derivative used in the chain rule will be 0.",1.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B035,calculation_formula,V4_full_router_retrieval_verifier,"If a ReLU input z is negative, what derivative is used during backpropagation?","For standard ReLU, the derivative is 0 when z is negative.","For standard ReLU, the derivative is 0 when the input z is negative, so the upstream gradient is multiplied by 0 through that unit.
+
+Evidence: Evidence 1; Evidence 2; Evidence 3",1.0,1.0,1,,,"draft_then_calculation_guard;route={""in_scope"": ""yes"", ""question_type"": ""calculation"", ""lecture_topic"": ""backpropagation and activation functions"", ""search_query"": ""Lecture 4 backpropagation If a ReLU input z is negative, what derivative is used during backpropagation?""}",core: full V0/V4 pass,,,,,,
+B036,calculation_formula,V0_baseline_single_call,"For y=f(w1*x1+w2*x2), what term multiplies the upstream gradient when computing dL/dw1?",The upstream gradient is multiplied by f'(z)*x1 where z=w1*x1+w2*x2.,"To determine which term multiplies the upstream gradient when computing \( \frac{dL}{dw1} \) for the function \( y = f(w1x1 + w2x2) \), we need to apply the chain rule of differentiation.
+
+Given:
+\[ y = f(w1x1 + w2x2) \]
+
+Let's denote:
+- \( z = w1x1 + w2x2 \)
+- \( y = f(z) \)
+
+The derivative of \( L \) with respect to \( w1 \) can be found using the chain rule as follows:
+
+\[ \frac{dL}{dw1} = \frac{\partial L}{\partial z} \cdot \frac{\partial z}{\partial w1} \]
+
+Here, \( \frac{\partial L}{\partial z} \) is the upstream gradient (or derivative of loss function with respect to \( z \)).
+
+Now, let's find \( \frac{\partial z}{\partial w1} \):
+
+\[ z = w1x1 + w2x2 \]
+
+Taking partial derivative with respect to \( w1 \):
+\[ \frac{\partial z}{\partial w1} = x1 \]
+
+Therefore:
+\[ \frac{dL}{dw1} = \frac{\partial L}{\partial z} \cdot x1 \]
+
+Thus, the term that multiplies the upstream gradient when computing \( \frac{dL}{dw1} \) is \( x1 \).",1.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B036,calculation_formula,V4_full_router_retrieval_verifier,"For y=f(w1*x1+w2*x2), what term multiplies the upstream gradient when computing dL/dw1?",The upstream gradient is multiplied by f'(z)*x1 where z=w1*x1+w2*x2.,"Let z = w1*x1 + w2*x2 and y = f(z). By the chain rule, dL/dw1 = (dL/dy) * f'(z) * x1. Therefore the upstream gradient is multiplied by the local derivative f'(z)*x1.
+
+Evidence: Evidence 1; Evidence 2; Evidence 3",1.0,1.0,1,,,"draft_then_calculation_guard;route={""in_scope"": ""yes"", ""question_type"": ""calculation"", ""lecture_topic"": ""backpropagation and gradients in neural networks"", ""search_query"": ""COMP5541 Lectures 2-9 For y=f(w1*x1+w2*x2), what term multiplies the upstream gradient when computing dL/dw1?""}",core: full V0/V4 pass,,,,,,
+B037,calculation_formula,V0_baseline_single_call,"What is the convolution output width formula for input width W, filter size F, padding P, and stride S?",The output width is (W - F + 2P) / S + 1 when the result is an integer.,"The formula to determine the output width (O) of a convolution layer in COMP5541 is given by:
+
+\[ O = \frac{W - F + 2P}{S} + 1 \]
+
+Where:
+- \( W \) is the input width.
+- \( F \) is the filter size.
+- \( P \) is the padding added to both sides of the input (typically uniform).
+- \( S \) is the stride used for convolution.
+
+This formula assumes that no additional zero-padding is applied beyond what is specified by \( P \).",1.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B037,calculation_formula,V4_full_router_retrieval_verifier,"What is the convolution output width formula for input width W, filter size F, padding P, and stride S?",The output width is (W - F + 2P) / S + 1 when the result is an integer.,"The convolution output width is (W - F + 2P) / S + 1, assuming the result is an integer.
+
+Evidence: Evidence 1; Evidence 2; Evidence 3",1.0,1.0,1,,,"draft_then_calculation_guard;route={""in_scope"": ""yes"", ""question_type"": ""calculation"", ""lecture_topic"": ""Convolutional Neural Networks (L5)"", ""search_query"": ""Lecture 5 convolution output size parameters What is the convolution output width formula for input width W, filter size F, padding P, and stride S?""}",core: full V0/V4 pass,,,,,,
+B038,calculation_formula,V0_baseline_single_call,"For a 32x32x3 image with 16 filters of size 3x3, stride 1, padding 1, and no bias, what is the output shape and parameter count?",The output shape is 32x32x16 and the parameter count is 3*3*3*16 = 432.,"The output shape for a convolutional layer can be determined using the formula: 
+
+\[ \text{Output Shape} = (\text{Input Size} - \text{Filter Size}) / \text{Stride} + 1 \]
+
+Given:
+- Input size (32x32x3)
+- Filter size (3x3)
+- Stride (1)
+
+The output shape for each dimension is:
+
+\[ \text{Output Shape} = (32 - 3) / 1 + 1 = 30 \]
+
+Thus, the output shape of the layer will be a 3D tensor with dimensions: 
+\[ 30 \times 30 \times 16 \]
+where 16 is the number of filters.
+
+For the parameter count:
+- Each filter has \(3 \times 3 \times 3 = 27\) parameters.
+- There are 16 such filters.
+
+Therefore, the total number of parameters (weights) in this layer is:
+
+\[ 27 \times 16 = 432 \]
+
+So, the output shape is \(30 \times 30 \times 16\) and the parameter count is 432.",0.5,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B038,calculation_formula,V4_full_router_retrieval_verifier,"For a 32x32x3 image with 16 filters of size 3x3, stride 1, padding 1, and no bias, what is the output shape and parameter count?",The output shape is 32x32x16 and the parameter count is 3*3*3*16 = 432.,"The output shape is 32x32x16. The parameter count is 3*3*3*16 = 432 (no bias).
+
+Evidence: Evidence 1; Evidence 2; Evidence 3",1.0,1.0,1,,,"draft_then_calculation_guard;route={""in_scope"": ""yes"", ""question_type"": ""calculation"", ""lecture_topic"": ""Convolutional Layers"", ""search_query"": ""Lecture 2 bias variance For a 32x32x3 image with 16 filters of size 3x3, stride 1, padding 1, and no bias, what is the output shape and parameter count?""}",core: full V0/V4 pass,,,,,,
+B039,calculation_formula,V0_baseline_single_call,"For a 28x28x8 feature map followed by 2x2 pooling with stride 2, what is the output shape?",The output shape is 14x14x8.,"The output shape of the feature map after applying a 2x2 pooling layer with a stride of 2 to a 28x28x8 input feature map can be calculated as follows:
+
+- The original dimensions are 28x28x8.
+- Pooling reduces spatial dimensions by half and uses a stride of 2, which means the reduction in each dimension is due to division by (stride).
+
+For both height and width:
+- Original size: 28
+- After pooling: \( \frac{28}{2} = 14 \)
+
+Thus, after applying the 2x2 pooling layer with a stride of 2, the output shape will be 14x14x8.",1.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B039,calculation_formula,V4_full_router_retrieval_verifier,"For a 28x28x8 feature map followed by 2x2 pooling with stride 2, what is the output shape?",The output shape is 14x14x8.,"The output shape is 14x14x8: the 2D spatial size is reduced by the 2x2 pooling window with stride 2, while the depth/channel count is unchanged.
+
+Evidence: Evidence 1; Evidence 2; Evidence 3",1.0,1.0,1,,,"draft_then_calculation_guard;route={""in_scope"": ""yes"", ""question_type"": ""calculation"", ""lecture_topic"": ""Convolutional Neural Networks (L5)"", ""search_query"": ""COMP5541 Lectures 2-9 For a 28x28x8 feature map followed by 2x2 pooling with stride 2, what is the output shape?""}",core: full V0/V4 pass,,,,,,
+B040,calculation_formula,V0_baseline_single_call,"For a 10x10 input, 3x3 filter, stride 1, and no padding, what is the convolution output width?",The output width is (10 - 3 + 0) / 1 + 1 = 8.,"For a 10x10 input with a 3x3 filter applied using stride 1 without any padding, the output width can be calculated as follows:
+
+- The formula to determine the output dimensions for a 2D convolution operation is: (W - F + 2P) / S + 1
+- Where W = Width of the input, F = Filter size, P = Padding, and S = Stride.
+- Given that there's no padding (P=0), the formula simplifies to: (W - F + 1) / S + 1
+
+For a 10x10 input with a 3x3 filter:
+- W = 10
+- F = 3
+- P = 0
+- S = 1
+
+Substituting these values into the formula gives: (10 - 3 + 1) / 1 + 1 = 8 + 1 = 9.
+
+Therefore, the output width is 9.",1.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B040,calculation_formula,V4_full_router_retrieval_verifier,"For a 10x10 input, 3x3 filter, stride 1, and no padding, what is the convolution output width?",The output width is (10 - 3 + 0) / 1 + 1 = 8.,"The convolution output width is (10 - 3 + 2*0) / 1 + 1 = 8.
+
+Evidence: Evidence 1; Evidence 2; Evidence 3",1.0,1.0,1,,,"draft_then_calculation_guard;route={""in_scope"": ""yes"", ""question_type"": ""calculation"", ""lecture_topic"": ""convolutional_layers_and_filters"", ""search_query"": ""Lecture 5 convolution output size parameters For a 10x10 input, 3x3 filter, stride 1, and no padding, what is the convolution output width?""}",core: full V0/V4 pass,,,,,,
+B041,calculation_formula,V0_baseline_single_call,"If dropout probability is high, what training effect is it trying to create?",It disables many units during training to regularize the model and reduce co-adaptation or overfitting.,"When the dropout probability is high during training for a neural network model in COMP5541, it aims to simulate the process of having many different models (each with its own randomly dropped neurons) contributing to the final decision. This technique, known as Dropout, helps mitigate overfitting by forcing the network to learn more robust features that are not overly dependent on any single neuron or feature set. Therefore, a high dropout probability encourages the model to create multiple training effects such as increased generalization and reduced reliance on specific neurons or connections within the network.",0.5,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B041,calculation_formula,V4_full_router_retrieval_verifier,"If dropout probability is high, what training effect is it trying to create?",It disables many units during training to regularize the model and reduce co-adaptation or overfitting.,"The training effect of high dropout probability is creating regularization, which helps prevent overfitting in neural networks.
+
+Key Course Terms:
+- Regularization
+
+Mechanism:
+- Dropout randomly masks some neurons' output to zero with a probability p during train time. At test time, the activations are scaled by multiplying them by the dropout probability p, such that the output at test time equals the expected output at training time.
+
+Caveat:
+- Only ~ 1082 atoms in the universe... (from Evidence 4) suggests the number of possible masks is astronomically large, implying a vast ensemble of models being trained simultaneously.
+
+Evidence: [Evidence 1], [Evidence 3]",0.5,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""Regularization Techniques in Deep Learning"", ""search_query"": ""Lecture 6 regularization dropout If dropout probability is high, what training effect is it trying to create?""}",core: full V0/V4 pass,,,,,,
+B042,calculation_formula,V0_baseline_single_call,"In an RNN, if the same recurrence is applied at each time step, what does parameter sharing mean?",The same parameter set is reused across time steps rather than learning separate parameters for each position.,"In an RNN (Recurrent Neural Network), if the same recurrence is applied at each time step and parameters are shared across these recurrences, it means that the weights of the network are reused for processing different inputs or sequences. This concept is known as parameter sharing in recurrent neural networks.
+
+[COMP5541-E03]",0.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B042,calculation_formula,V4_full_router_retrieval_verifier,"In an RNN, if the same recurrence is applied at each time step, what does parameter sharing mean?",The same parameter set is reused across time steps rather than learning separate parameters for each position.,"Direct Answer: Parameter sharing in an RNN means that the same set of parameters, such as weights (W), are used at every time step to update the hidden state.
+
+Key Terms:
+- Recurrent Neural Network (RNN)
+- Vanilla RNN
+
+Caveat:
+The recurrence is applied at each time step using a shared function 𝑓! and the same set of parameters W.",0.0,0.5,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""Recurrent Neural Networks (RNN) and their operations"", ""search_query"": ""Lecture 7 recurrent neural network In an RNN, if the same recurrence is applied at each time step, what does parameter sharing mean?""}",core: full V0/V4 pass,,,,,,
+B043,calculation_formula,V0_baseline_single_call,"In attention, if weights a_i are applied to vectors x_i, what is the context vector formula?",The context vector is the weighted sum c = sum_i a_i x_i.,"The context vector formula when weights \(a_i\) are applied to vectors \(x_i\) in the context of attention mechanisms can be represented as follows:
+
+\[ c = \sum_{i} a_i x_i \]
+
+Where:
+- \(c\) represents the context vector.
+- \(a_i\) are the weights, which could be learned parameters or computed based on some similarity measure between query and key vectors.
+- \(x_i\) are the input vectors.
+
+This formula sums up all weighted input vectors to produce the final context vector. The exact computation of weights \(a_i\) depends on the specific attention mechanism being used (e.g., dot-product, scaled-dot product, etc.).",1.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B043,calculation_formula,V4_full_router_retrieval_verifier,"In attention, if weights a_i are applied to vectors x_i, what is the context vector formula?",The context vector is the weighted sum c = sum_i a_i x_i.,"The context vector formula in attention, when weights \(a_i\) are applied to vectors \(x_i\), is given by:
+\[ y_j = \sum_{i} a_{ij} v_i \]
+where \(y\) represents the context vector with shape \(Dv\).
+
+Key course terms needed for full credit include: Attention mechanism, Key vectors (k), Value vectors (v), Query vectors (q), Alignment weights (\(a_{ij}\)), and Context vector (c or y).
+
+Evidence: [Evidence 1], [Evidence 3]",0.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""calculation"", ""lecture_topic"": ""L4 Attention Mechanism and its Formulas"", ""search_query"": ""Lecture 8 attention transformer In attention, if weights a_i are applied to vectors x_i, what is the context vector formula?""}",core: full V0/V4 pass,,,,,,
+B044,calculation_formula,V0_baseline_single_call,"In autoregressive image modeling, how is the joint likelihood decomposed?","It is decomposed into a product of conditional probabilities, where each pixel is conditioned on previous pixels.","In autoregressive image modeling, the joint likelihood of an image sequence can be decomposed using a recursive structure based on the Markov property assumption. This decomposition allows for efficient computation and model training.
+
+The joint probability density P(X) of an image sequence X = {x_1, x_2, ..., x_T} is modeled as a product of conditional probabilities:
+
+P(X) = P(x_1) * P(x_2|x_1) * ... * P(x_T|x_1, x_2, ..., x_{T-1})
+
+Where each term P(x_t | x_{t-1}, ..., x_1) is modeled as a function of the previous image in the sequence. In an autoregressive model, this conditional probability is further decomposed into:
+
+P(x_t | x_{t-1}, ..., x_1) = Π_i P(x_t | x_{t-i})
+
+Where i ranges from 1 to some order L (the number of lags or previous images used in the prediction). This leads to a recursive structure where each image is modeled as a function of its L predecessors.
+
+This decomposition allows for efficient computation, as only the most recent L images are needed to compute the current image's probability. The model parameters can be learned by maximizing this likelihood using techniques such as maximum likelihood estimation or variational inference.
+
+For instance, in an order-L autoregressive model, if we denote the previous L images as x_{t-1}, ..., x_t, then:
+
+P(x_t | x_{t-1}, ..., x_1) = Π_i P(x_t | x_{t-i})
+
+Where i ranges from 1 to L.",0.5,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B044,calculation_formula,V4_full_router_retrieval_verifier,"In autoregressive image modeling, how is the joint likelihood decomposed?","It is decomposed into a product of conditional probabilities, where each pixel is conditioned on previous pixels.","Direct Answer: In autoregressive image modeling, the joint likelihood of an image x is decomposed into a product of conditional probabilities.
+
+Key Course Terms:
+- Autoregressive modeling
+- Conditional Probability
+
+Mechanism:
+The decomposition follows the formula provided in Evidence [Evidence 2]: 
+𝑝 𝑥! , 𝑥"" , … , 𝑥# = 𝑝 𝑥! ×𝑝 𝑥"" 𝑥! × ⋯×𝑝 𝑥# |𝑥! , 𝑥"" , … 𝑥#$!
+
+Formula:
+𝑝 𝑥! , 𝑥"" , … , 𝑥# = 𝑝 𝑥! ×𝑝 𝑥"" 𝑥! × ⋯×𝑝 𝑥# |𝑥! , 𝑥"" , … 𝑥#$!
+
+Evidence: [Evidence 1], [Evidence 2]",0.5,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""calculation"", ""lecture_topic"": ""Autoregressive Models in Image Processing"", ""search_query"": ""COMP5541 Lectures 2-9 In autoregressive image modeling, how is the joint likelihood decomposed?""}",core: full V0/V4 pass,,,,,,
+B045,calculation_formula,V0_baseline_single_call,"In the GAN MNIST tutorial, are digit labels used by the GAN training objective?",No. The GAN uses images as unsupervised data and ignores the MNIST digit labels for the adversarial objective.,"According to the course material [COMP5541], in the GAN MNIST tutorial, digit labels are not directly used as part of the training objective for the generator (G) or discriminator (D). The primary focus is on generating realistic handwritten digit images rather than incorporating class information from the dataset.",0.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B045,calculation_formula,V4_full_router_retrieval_verifier,"In the GAN MNIST tutorial, are digit labels used by the GAN training objective?",No. The GAN uses images as unsupervised data and ignores the MNIST digit labels for the adversarial objective.,"Direct Answer: No, digit labels are not used by the GAN training objective.
+
+Key Terms:
+GAN (Generative Adversarial Network)
+MNIST (Mixed National Institute of Standards and Technology database)
+
+Explanation: The code provided in T8_GAN_MNIST_Tutorial.ipynb explicitly states that MNIST provides image-label pairs but the GAN training only uses images. The digit labels are ignored, as they are not utilized for the GAN's objective function. This is further supported by the fact that the generator and discriminator do not incorporate any information from these labels during their respective optimization processes.
+
+Evidence:
+[Evidence 3]
+[Evidence 4]
+[Evidence 5]",0.5,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""Generative Adversarial Networks (GANs) and their applications to image data like MNIST."", ""search_query"": ""Lecture 9 generative adversarial network In the GAN MNIST tutorial, are digit labels used by the GAN training objective?""}",core: full V0/V4 pass,,,,,,
+B016,reasoning_comparison,V0_baseline_single_call,Why should K in KNN be selected using validation data instead of the test set?,"Validation data is for hyperparameter selection, while the test set should remain reserved for final unbiased evaluation.","K in K-Nearest Neighbors (KNN) should be selected using validation data rather than the test set to avoid data leakage. The test set is reserved for evaluating the final model, ensuring an unbiased assessment of its performance. Using validation data for tuning hyperparameters like K can lead to overly optimistic estimates of model performance because the same data might influence both training and validation processes. This violates the principle of independent and identically distributed (i.i.d.) assumptions required for valid statistical inference. Therefore, selecting K using a separate validation set helps in achieving more reliable and robust model evaluation.",1.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B016,reasoning_comparison,V4_full_router_retrieval_verifier,Why should K in KNN be selected using validation data instead of the test set?,"Validation data is for hyperparameter selection, while the test set should remain reserved for final unbiased evaluation.","Why should K in KNN be selected using validation data instead of the test set? The most appropriate approach for selecting the hyperparameter K is to use a validation set or cross-validation (Evidence: [Evidence 3]). This method allows for effective estimation of hyperparameters without compromising model performance evaluation, which is crucial for ensuring robustness and generalization.
+
+Key terms:
+- Hyperparameter
+- Validation set
+- Cross-validation
+
+Evidence: [Evidence 1], [Evidence 2], [Evidence 3]",1.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""comparison"", ""lecture_topic"": ""model_selection_and_validation"", ""search_query"": ""Lecture 2 KNN Why should K in KNN be selected using validation data instead of the test set?""}",core: full V0/V4 pass,,,,,,
+B017,reasoning_comparison,V0_baseline_single_call,Why can a very flexible model have high variance?,"A very flexible model can fit training noise and become sensitive to the sampled training data, causing overfitting.","A very flexible model can have high variance because it is able to fit random noise or outliers in the training data as if they were actual patterns, leading to overfitting. This flexibility allows the model to capture complex relationships that may not generalize well to unseen data.
+
+[COMP5541-Evidence03]",1.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B017,reasoning_comparison,V4_full_router_retrieval_verifier,Why can a very flexible model have high variance?,"A very flexible model can fit training noise and become sensitive to the sampled training data, causing overfitting.","A very flexible model can have high variance because it overfits the training data. This aligns with the concept that a simpler model has low bias, but high variance, while a more complex model like a very flexible one may capture noise as well as the underlying pattern in the data.
+
+Evidence: [Evidence 1], [Evidence 2]",0.5,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""model flexibility and generalization"", ""search_query"": ""Lecture 2 bias variance Why can a very flexible model have high variance?""}",core: full V0/V4 pass,,,,,,
+B018,reasoning_comparison,V0_baseline_single_call,How do L1 and L2 regularization differ in their effect on weights?,"L1 encourages sparse weights, while L2 shrinks weights more smoothly without usually making them exactly zero.","L1 and L2 regularization both influence the magnitude of model parameters (weights) but through different mechanisms.
+
+- **L2 Regularization** (also known as Ridge Regression): This method adds a penalty equivalent to square of the magnitude of coefficients. The objective function for an L2 regularized model is minimized by balancing the loss function with the sum of squares of weights, encouraging smaller weights while allowing them to remain non-zero. Hence, L2 regularization can help in reducing overfitting but does not drive any weight to exactly zero.
+
+- **L1 Regularization** (also known as Lasso Regression): This method adds a penalty equivalent to the absolute value of the magnitude of coefficients. The objective function for an L1 regularized model is minimized by balancing the loss function with the sum of absolute values of weights, which can drive some weights exactly to zero. Therefore, in addition to reducing overfitting and shrinking weights towards zero, L1 regularization has the capability of performing feature selection by setting certain coefficients to zero.
+
+In summary, while both methods aim to reduce model complexity (and potentially prevent overfitting), they do so differently: L2 shrinks weights but does not set them to zero, whereas L1 can drive some weights to exactly zero.",1.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B018,reasoning_comparison,V4_full_router_retrieval_verifier,How do L1 and L2 regularization differ in their effect on weights?,"L1 encourages sparse weights, while L2 shrinks weights more smoothly without usually making them exactly zero.","Direct Answer: L1 regularization tends to produce sparse models with some non-zero weights, while L2 regularization results in smaller but non-zero weights for all features.
+
+Key Course Terms:
+- Regularization
+- Sparsity
+- Weight decay
+
+Explanation:
+L1 regularization encourages sparsity by penalizing the absolute value of the weights. This means that it can set some weight values to exactly zero, effectively removing those features from the model. In contrast, L2 regularization tends to keep all weights small but non-zero, as it penalizes large weights more heavily than smaller ones.
+
+Formula:
+For a given weight vector 𝜃, the combined objective function for minimizing both data loss and regularization is represented by:
+- For L1 regularization: 𝑅(𝑤) = |𝜃! | + |𝜃"" |
+- For L2 regularization: 𝐿(𝑤) = 𝜃!"" + 𝜃""
+
+Evidence: [Evidence 1], [Evidence 5]",1.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""comparison"", ""lecture_topic"": ""regularization_methods"", ""search_query"": ""COMP5541 Lectures 2-9 How do L1 and L2 regularization differ in their effect on weights?""}",core: full V0/V4 pass,,,,,,
+B019,reasoning_comparison,V0_baseline_single_call,Why can minibatch gradient descent be noisier than full-batch gradient descent?,"A minibatch uses only a subset of examples, so its gradient estimate has higher variance than a full-batch gradient.","Minibatch gradient descent introduces noise into the optimization process due to its use of smaller subsets (minibatches) of the training data for computing gradients at each iteration. This is in contrast to full-batch gradient descent, which uses all available data points for computing gradients. The variance introduced by using different mini-batches can lead to more fluctuating updates towards the minimum, hence making the optimization process noisier compared to full-batch gradient descent.
+
+[COMP5541-ConceptOfGradientDescent]",0.5,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B019,reasoning_comparison,V4_full_router_retrieval_verifier,Why can minibatch gradient descent be noisier than full-batch gradient descent?,"A minibatch uses only a subset of examples, so its gradient estimate has higher variance than a full-batch gradient.","Why can minibatch gradient descent be noisier than full-batch gradient descent?
+Because minibatch gradient descent uses only a subset of the data to estimate the gradient at each step, leading to more noisy and less stable updates compared to using all data points in full batch gradient descent. This noise arises from the variability in the mini-batches and can lead to faster convergence but also more oscillations around the minimum.
+
+Key Course Terms:
+- Stochastic Gradient Descent (SGD)
+- Noisy gradient
+- Local Minima
+
+Evidence: [Evidence 1], [Evidence 5]",0.5,1.0,0,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""comparison"", ""lecture_topic"": ""mini-batch gradient descent vs. full batch gradient descent"", ""search_query"": ""COMP5541 Lectures 2-9 Why can minibatch gradient descent be noisier than full-batch gradient descent?""}",core: full V0/V4 pass,,,,,,
+B020,reasoning_comparison,V0_baseline_single_call,Why can AdaGrad's effective learning rate become too small over training?,"AdaGrad accumulates squared gradients in the denominator, so the effective learning rate can decay continually.","AdaGrad's effective learning rate can become too small over time due to the accumulation of squared gradient magnitudes used in its denominator for adaptive scaling. This mechanism, designed to help with sparse and noisy gradients by gradually increasing the step size as it observes more data, can lead to diminishing updates if not properly managed. As the algorithm progresses through training, the accumulated sum of squared gradients (which acts as a form of moving average) grows larger, causing the denominator in AdaGrad's learning rate adjustment formula to increase significantly. Consequently, this results in smaller adjustments to the weights during subsequent iterations, effectively reducing the effective learning rate and potentially leading to slow or stagnant convergence.",0.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B020,reasoning_comparison,V4_full_router_retrieval_verifier,Why can AdaGrad's effective learning rate become too small over training?,"AdaGrad accumulates squared gradients in the denominator, so the effective learning rate can decay continually.","Why can AdaGrad's effective learning rate become too small over training?
+Direct Answer: AdaGrad's effective learning rate can become too small over training due to the accumulation of squared gradient magnitudes.
+
+Key Course Terms:
+- Learning Rate Accumulation
+
+Caveat:
+AdaGrad adjusts its learning rate dynamically based on past gradients, which can lead to very small or even zero learning rates for certain parameters if they have encountered large gradients in earlier stages of training. This mechanism is designed to help escape flat or bad local minima and prevent overshooting, but it can also result in overly conservative updates as the model progresses through more epochs.
+
+Evidence:
+[Evidence 1], [Evidence 5]",0.0,1.0,0,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""calculation"", ""lecture_topic"": ""AdaGrad optimization algorithm and its limitations"", ""search_query"": ""Lecture 6 learning rate scheduler Why can AdaGrad's effective learning rate become too small over training?""}",core: full V0/V4 pass,,,,,,
+B021,reasoning_comparison,V0_baseline_single_call,Why does ReLU often train better than sigmoid in hidden layers?,ReLU is non-saturating on the positive side and can reduce vanishing-gradient problems compared with saturated sigmoid units.,"ReLU (Rectified Linear Unit) often trains better than sigmoid in hidden layers due to its computational efficiency and ability to mitigate the vanishing gradient problem, as stated in (P34, Lecture 6). The non-linear activation function of ReLU allows for faster convergence during training compared to sigmoid. Additionally, ReLU does not suffer from the vanishing gradient issue that can occur with sigmoid when applied to deep neural networks, which helps in maintaining stable and effective learning throughout deeper layers.",1.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B021,reasoning_comparison,V4_full_router_retrieval_verifier,Why does ReLU often train better than sigmoid in hidden layers?,ReLU is non-saturating on the positive side and can reduce vanishing-gradient problems compared with saturated sigmoid units.,"Direct Answer: ReLU often trains better than sigmoid in hidden layers because it does not saturate, which leads to faster and more stable training.
+
+Key Course Terms:
+- Activation Functions
+
+Mechanism:
+ReLU (Rectified Linear Unit) activation function does not allow the input value to pass through when it is negative. This prevents the gradient from dying during backpropagation, a common issue with sigmoid activations that can lead to vanishing gradients.
+
+Caveat:
+While ReLU helps in avoiding the ""dying"" problem of sigmoid, it introduces its own challenge known as the ""exploding"" problem where very large values can occur due to the linear region when inputs are positive but not too large. This is mitigated by techniques like leaky ReLU or parametric ReLUs.
+
+Evidence:
+[Evidence 1], [Evidence 2], [Evidence 3], [Evidence 4], [Evidence 5]",1.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""neural_networks_and_activation_functions"", ""search_query"": ""Lecture 4 activation ReLU Why does ReLU often train better than sigmoid in hidden layers?""}",core: full V0/V4 pass,,,,,,
+B022,reasoning_comparison,V0_baseline_single_call,Why is a deep network without nonlinearities no more expressive than a linear model?,"A composition of linear transformations is still a single linear transformation, so depth alone does not create nonlinear decision boundaries.",Not enough information in the provided course materials.,0.0,1.0,0,,,,core: full V0/V4 pass,,,,,,
+B022,reasoning_comparison,V4_full_router_retrieval_verifier,Why is a deep network without nonlinearities no more expressive than a linear model?,"A composition of linear transformations is still a single linear transformation, so depth alone does not create nonlinear decision boundaries.","A deep network without nonlinearities is no more expressive than a linear model because stacking multiple layers of activation functions does not increase its expressiveness beyond what a single layer can achieve.
+
+Key Course Terms:
+- Activation function
+- Linear regression models
+
+Caveat:
+Linear regression models are equivalent when stacked in multiple layers. This means that the complexity and ability to fit non-linear data is not enhanced by adding more layers without introducing nonlinearities through activation functions.
+
+Evidence: [Evidence 1], [Evidence 5]",0.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""deep_learning_theory"", ""search_query"": ""COMP5541 Lectures 2-9 Why is a deep network without nonlinearities no more expressive than a linear model?""}",core: full V0/V4 pass,,,,,,
+B023,reasoning_comparison,V0_baseline_single_call,Why are convolutional layers more parameter-efficient than fully connected layers for images?,Convolutional layers use local connectivity and weight sharing instead of separate weights for every input-output pair.,"Convolutional layers are more parameter-efficient for images due to their architecture which inherently reduces the number of parameters compared to fully connected (FC) layers. In a convolutional layer, each neuron in the output layer is only connected to a small region of input features defined by its kernel size and stride, rather than all input features as in FC layers. This results in significantly fewer parameters, making them more efficient for image data where spatial hierarchies are preserved through multiple convolutional layers.
+
+Moreover, convolutional layers use kernels (also known as filters) that slide across the input feature map to compute a dot product with each local region of the input, effectively learning different features at various scales and locations. This mechanism allows them to capture both low-level details like edges and textures, and high-level abstractions such as shapes and objects without requiring an excessive number of parameters.
+
+In contrast, fully connected layers connect every neuron in one layer to every neuron in the next layer, leading to a much larger parameter count that scales with the product of input and output dimensions. For image data, this results in a prohibitively large number of parameters if not pruned or regularized carefully, making convolutional layers more suitable for efficient learning on images.
+
+For further details, refer to [COMP5541 Lecture 3](#).",0.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B023,reasoning_comparison,V4_full_router_retrieval_verifier,Why are convolutional layers more parameter-efficient than fully connected layers for images?,Convolutional layers use local connectivity and weight sharing instead of separate weights for every input-output pair.,"Direct Answer: Convolutional layers are more parameter-efficient than fully connected layers for images because they have fewer parameters, which reduces memory storage requirements and improves scalability for large images.
+
+Key Course Terms:
+- Fully Connected Layers
+
+Mechanism/Caveat:
+- In convolutional layers, each neuron is only connected to a small region of the input space (its receptive field), rather than all neurons in the preceding layer as in fully connected layers. This reduces the number of parameters significantly.
+- The fewer connections mean less memory storage and computation required for large images.
+
+Evidence: [Evidence 1], [Evidence 2], [Evidence 3], [Evidence 4], [Evidence 5]",0.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""comparison"", ""lecture_topic"": ""Convolutional Neural Networks (CNNs) and their architecture"", ""search_query"": ""Lecture 5 convolution output size parameters Why are convolutional layers more parameter-efficient than fully connected layers for images?""}",core: full V0/V4 pass,,,,,,
+B024,reasoning_comparison,V0_baseline_single_call,Why can stacking several 3x3 convolution layers be useful?,Stacking 3x3 layers increases the receptive field while adding nonlinearities and often using fewer parameters than one large filter.,"Stacking several 3x3 convolution layers can be useful because it allows for the application of multiple feature detectors with varying receptive fields, enhancing the model's ability to capture complex spatial hierarchies and features in the input data. This approach is detailed in [Course Material 4.2].",0.5,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B024,reasoning_comparison,V4_full_router_retrieval_verifier,Why can stacking several 3x3 convolution layers be useful?,Stacking 3x3 layers increases the receptive field while adding nonlinearities and often using fewer parameters than one large filter.,"Direct Answer: Stacking several 3x3 convolution layers can be useful because each additional layer can increase the depth of features learned by the network without significantly increasing the spatial dimensions. This is possible due to the output size calculation formula for a convolutional layer, which shows that with stride values greater than 1, the output size decreases, allowing for multiple layers to be stacked.
+
+Key Course Terms: Convolution Layer, Pooling Layers, Activation Function, Fully-Connected Layers
+
+Evidence: [Evidence 1], [Evidence 5]",0.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""Convolutional Neural Networks (CNNs) and their architectures"", ""search_query"": ""Lecture 5 convolution output size parameters Why can stacking several 3x3 convolution layers be useful?""}",core: full V0/V4 pass,,,,,,
+B025,reasoning_comparison,V0_baseline_single_call,Why is horizontal flip often safer than upside-down augmentation for natural images?,"Horizontal flipping often preserves semantics, while upside-down images can change semantics or create a train-test distribution mismatch.","Horizontal flip is often considered safer than upside-down augmentation for natural images because it preserves the spatial relationships between objects more accurately compared to flipping an image upside down. In many real-world scenarios, such as face recognition and object detection tasks, maintaining these relationships is crucial for model performance (COMP5541-03). Upside-down transformations can lead to significant distortions that break these relationships, making it harder for models to recognize objects correctly. Horizontal flip, on the other hand, does not alter the relative positions of objects within an image, thus preserving more meaningful information for training purposes.",0.5,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B025,reasoning_comparison,V4_full_router_retrieval_verifier,Why is horizontal flip often safer than upside-down augmentation for natural images?,"Horizontal flipping often preserves semantics, while upside-down images can change semantics or create a train-test distribution mismatch.","The premise is incorrect: standard CNNs are not naturally invariant to a 180-degree rotation. Training on upside-down images can create a train-test distribution mismatch, so performance on normal test images can be hurt.
+
+Evidence: Evidence 1; Evidence 2; Evidence 3",0.5,1.0,1,,,"draft_then_rule_guard;route={""in_scope"": ""yes"", ""question_type"": ""comparison"", ""lecture_topic"": ""image augmentation techniques and their effects on image quality"", ""search_query"": ""COMP5541 Lectures 2-9 Why is horizontal flip often safer than upside-down augmentation for natural images?""}",core: full V0/V4 pass,,,,,,
+B026,reasoning_comparison,V0_baseline_single_call,Why should a model be able to overfit a tiny dataset during sanity checking?,"If the model cannot overfit a tiny dataset, there may be a bug in the data pipeline, model, loss, or optimizer.",Not enough information in the provided course materials.,0.0,1.0,0,,,,core: full V0/V4 pass,,,,,,
+B026,reasoning_comparison,V4_full_router_retrieval_verifier,Why should a model be able to overfit a tiny dataset during sanity checking?,"If the model cannot overfit a tiny dataset, there may be a bug in the data pipeline, model, loss, or optimizer.","Why should a model be able to overfit a tiny dataset during sanity checking?
+Direct Answer: A model should be able to overfit a tiny dataset during sanity checking because it helps identify hyperparameters and learning rates that lead to poor generalization, which is crucial for choosing an appropriate architecture and training regime.
+
+Key Course Terms:
+- Overfitting
+- Hyperparameter tuning
+- Learning rate
+
+Evidence:
+[Evidence 1]
+[Evidence 2]
+[Evidence 3]
+[Evidence 4]",0.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""unanswerable"", ""lecture_topic"": ""model validation and evaluation techniques"", ""search_query"": ""COMP5541 Lectures 2-9 Why should a model be able to overfit a tiny dataset during sanity checking?""}",core: full V0/V4 pass,,,,,,
+B027,reasoning_comparison,V0_baseline_single_call,Why was LSTM introduced compared with vanilla RNNs?,LSTM uses gates and a cell state to preserve longer-range information and reduce vanishing-gradient issues.,"LSTM (Long Short-Term Memory) networks were introduced to address the vanishing gradient problem inherent in vanilla Recurrent Neural Networks (RNNs). This issue arises because gradients, which are used during training to adjust weights and improve model performance, tend to diminish as they propagate through many time steps in RNNs. LSTM addresses this by incorporating memory cells that allow for more controlled information flow and reduced vanishing gradient problems, enabling the network to learn long-term dependencies effectively.",0.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B027,reasoning_comparison,V4_full_router_retrieval_verifier,Why was LSTM introduced compared with vanilla RNNs?,LSTM uses gates and a cell state to preserve longer-range information and reduce vanishing-gradient issues.,"Why was LSTM introduced compared with vanilla RNNs? LSTM was introduced to alleviate the vanishing gradient problem, which is a challenge faced by vanilla RNNs.
+
+Key Course Terms:
+- Recurrent Neural Network (RNN)
+- Long Short Term Memory (LSTM)
+
+Mechanism/Caveat:
+- Vanilla RNNs suffer from the vanishing gradient problem, where gradients flow through time and diminish exponentially.
+- LSTM introduces gating mechanisms to control information flow within the cell state, thereby mitigating the vanishing gradient issue.
+
+Evidence: [1] [3]",0.5,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""LSTM architecture and its introduction as an improvement over vanilla RNNs"", ""search_query"": ""Lecture 7 recurrent neural network Why was LSTM introduced compared with vanilla RNNs?""}",core: full V0/V4 pass,,,,,,
+B028,reasoning_comparison,V0_baseline_single_call,Why are Transformers more parallelizable than RNNs?,"Transformers use attention rather than recurrent step-by-step state updates, so token computations can be parallelized.","Transformers are more parallelizable than RNNs due to their reliance on self-attention mechanisms which process each position in the sequence independently of others, allowing for concurrent processing. This contrasts with RNNs and LSTMs that have a sequential dependency structure, making them inherently less amenable to parallelization across different time steps.",0.5,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B028,reasoning_comparison,V4_full_router_retrieval_verifier,Why are Transformers more parallelizable than RNNs?,"Transformers use attention rather than recurrent step-by-step state updates, so token computations can be parallelized.","Transformers are more parallelizable than RNNs because Transformers do not rely on an internal state that is updated as a sequence is processed, unlike RNNs (evidence [Evidence 1]). This means transformers can process multiple sequences simultaneously without losing information, whereas RNNs have dependencies between time steps which limit parallel processing.
+
+Key Course Terms:
+- Recurrent Neural Network (RNN)
+- Attention mechanism
+
+Caveat:
+- Transformers use self-attention mechanisms that allow them to compute queries, keys, and values independently for each element in a sequence, enabling parallel computation.",1.0,1.0,0,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""comparison"", ""lecture_topic"": ""transformers_vs_rnn_parallelism"", ""search_query"": ""Lecture 7 recurrent neural network Why are Transformers more parallelizable than RNNs?""}",core: full V0/V4 pass,,,,,,
+B029,reasoning_comparison,V0_baseline_single_call,Why can PixelRNN generation be slow?,"PixelRNN generates pixels sequentially, so generation cannot be fully parallelized over pixels.",not enough information in the provided course materials,0.0,1.0,0,,,,core: full V0/V4 pass,,,,,,
+B029,reasoning_comparison,V4_full_router_retrieval_verifier,Why can PixelRNN generation be slow?,"PixelRNN generates pixels sequentially, so generation cannot be fully parallelized over pixels.","PixelRNN generation can be slow due to its dependency on previous pixels, as stated in Evidence [Evidence 2].
+
+Key Course Terms: PixelRNN, Diagonal LSTM, Recurrent Neural Network (RNN), Long Short-Term Memory (LSTM)
+
+Explanation:
+The mechanism behind the slowness of PixelRNN is attributed to its use of a Diagonal LSTM model. This model inherently depends on previous pixels for generating new ones, which introduces sequential dependencies that are computationally expensive and slow during both training and inference phases.
+
+Evidence: [Evidence 1], [Evidence 2]",0.5,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""calculation"", ""lecture_topic"": ""training_time_and_performance"", ""search_query"": ""Lecture 7 recurrent neural network Why can PixelRNN generation be slow?""}",core: full V0/V4 pass,,,,,,
+B030,reasoning_comparison,V0_baseline_single_call,Why can GAN loss curves be hard to interpret by themselves?,"GAN training is a dynamic two-player game, so losses can oscillate and generated samples should also be inspected.",Not enough information in the provided course materials.,0.0,1.0,0,,,,core: full V0/V4 pass,,,,,,
+B030,reasoning_comparison,V4_full_router_retrieval_verifier,Why can GAN loss curves be hard to interpret by themselves?,"GAN training is a dynamic two-player game, so losses can oscillate and generated samples should also be inspected.","Why can GAN loss curves be hard to interpret by themselves?
+
+Direct Answer:
+GAN loss curves can be hard to interpret because they do not directly indicate the quality of generated samples but rather focus on the discriminator's ability to distinguish between real and fake images.
+
+Key Course Terms: Generative Adversarial Network (GAN), Discriminator, Generator
+
+Explanation:
+The GAN loss curves are derived from two components: the generator’s loss and the discriminator’s loss. The generator aims to produce realistic samples that fool the discriminator into thinking they are real. The discriminator's job is to correctly classify whether an image is real or fake. 
+
+However, these loss curves do not directly show how well the generated images match the actual data distribution. Instead, they measure the performance of both networks in their adversarial game. This makes it challenging to interpret the results solely from the loss curves.
+
+For full credit, include the following formula:
+Generator Loss = -Expected Real Logits + Expected Fake Logits
+Discriminator Loss = -Expected Real Labels * Expected Real Logits - (1 - Expected Real Labels) * Expected Fake Logits
+
+Evidence: [Evidence 3], [Evidence 4]",0.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""unanswerable"", ""lecture_topic"": ""Generative Adversarial Networks (GANs) and their training dynamics"", ""search_query"": ""Lecture 9 generative adversarial network Why can GAN loss curves be hard to interpret by themselves?""}",core: full V0/V4 pass,,,,,,
+B001,retrieval_concept,V0_baseline_single_call,What assumption makes KNN predictions reasonable for nearby data points?,KNN assumes nearby points in feature space tend to have similar labels or outputs.,"The assumption that makes KNN (K-Nearest Neighbors) predictions reasonable for nearby data points is the principle of ""locality"" or ""proximity"". This assumption posits that instances with similar features are likely to have similar target values, and these similar instances will be found among the nearest neighbors in feature space. The choice of k also plays a role here, as it influences how many neighbors' labels are considered when making predictions for an instance.
+
+[COMP5541-ConceptOfKNN]",1.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B001,retrieval_concept,V1_retrieval_only,What assumption makes KNN predictions reasonable for nearby data points?,KNN assumes nearby points in feature space tend to have similar labels or outputs.,"Assumption: Data points that are closer in the feature space are likely to have similar labels or properties.
+
+Key Terms: KNN (K-Nearest Neighbors)
+
+Explanation: The key assumption for KNN predictions is that data points which are close together in the feature space tend to share similar characteristics. This proximity-based similarity forms the basis of how KNN makes its predictions, as it relies on the majority label among its nearest neighbors when classifying new instances.
+
+Evidence:
+[Evidence 1]
+[Evidence 2]
+[Evidence 3]",0.5,1.0,1,,,,verify keyword-metric bias claim (V1 concept),,,,,,
+B001,retrieval_concept,V4_full_router_retrieval_verifier,What assumption makes KNN predictions reasonable for nearby data points?,KNN assumes nearby points in feature space tend to have similar labels or outputs.,"Assumption: The main assumption behind KNN is that data points that are closer in the feature space are likely to have similar labels or properties.
+
+Key Terms: Feature Space, Similar Labels or Properties
+
+Explanation: According to Evidence [Evidence 1] on page 29 of Lecture2-2026-COMP5541(1).pdf, it states ""What is the assumption for KNN? Data points that are closer in the feature space are likely to have similar labels or properties."" This directly addresses the main assumption required for KNN predictions to be reasonable.",0.5,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""K-Nearest Neighbors (KNN) algorithm and its assumptions"", ""search_query"": ""Lecture 2 KNN What assumption makes KNN predictions reasonable for nearby data points?""}",core: full V0/V4 pass,,,,,,
+B002,retrieval_concept,V0_baseline_single_call,"In linear regression, what do the learned weights represent?",The weights define a linear mapping from input features to the predicted output.,"In linear regression, the learned weights represent the coefficients that define the relationship between the input features and the output variable. These weights are determined during the training phase of the model through optimization algorithms such as gradient descent, which aim to minimize a cost function typically based on mean squared error (MSE). Each weight corresponds to an input feature, indicating its contribution or importance in predicting the output. For instance, if you have two features \(x_1\) and \(x_2\), the learned weights would be represented as \(\beta_0 + \beta_1 x_1 + \beta_2 x_2\), where \(\beta_0\) is the intercept term and \(\beta_1, \beta_2\) are the coefficients for \(x_1\) and \(x_2\) respectively.",0.5,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B002,retrieval_concept,V1_retrieval_only,"In linear regression, what do the learned weights represent?",The weights define a linear mapping from input features to the predicted output.,"The learned weights in linear regression represent the coefficients that define the slope of the line used to model the relationship between the input features and the output variable. These weights are learned through training on a dataset, allowing the model to fit the data by adjusting these values.
+
+Key Course Terms:
+- Linear Regression
+
+Caveat:
+Linear models have linear decision boundaries and cannot learn non-linear relationships in the data.
+
+Evidence: [Evidence 1], [Evidence 4]",0.5,1.0,1,,,,verify keyword-metric bias claim (V1 concept),,,,,,
+B002,retrieval_concept,V4_full_router_retrieval_verifier,"In linear regression, what do the learned weights represent?",The weights define a linear mapping from input features to the predicted output.,"The learned weights in linear regression represent the coefficients that define the slope of the line used to model the relationship between the input features and the output variable. These weights are learned through training on a dataset, allowing the model to fit the data by adjusting these values.
+
+Key Course Terms:
+- Linear Regression
+
+Caveat:
+Linear models have linear decision boundaries and cannot learn non-linear relationships in the data.
+
+Evidence: [Evidence 1], [Evidence 4]",0.5,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""Linear Regression and its Interpretations"", ""search_query"": ""Lecture 2 linear regression In linear regression, what do the learned weights represent?""}",core: full V0/V4 pass,,,,,,
+B003,retrieval_concept,V0_baseline_single_call,What is the role of the validation set in model development?,The validation set is used to choose models or hyperparameters without using the final test set.,"The validation set plays a crucial role in the process of model development within COMP5541 by serving as an independent dataset used to evaluate the performance of a machine learning model during the hyperparameter tuning and final selection stages. It helps in assessing how well the model generalizes to unseen data, thereby aiding in preventing overfitting - a scenario where the model performs excellently on the training set but poorly on new, unseen data. The validation set is distinct from both the training set, which the model learns from during its training phase, and the test set, which is used for final evaluation after all hyperparameters have been optimized.",1.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B003,retrieval_concept,V1_retrieval_only,What is the role of the validation set in model development?,The validation set is used to choose models or hyperparameters without using the final test set.,"The role of the validation set in model development is to choose and adjust hyperparameters.
+
+Key terms: validation set, hyperparameters
+
+Explanation:
+The provided evidence indicates that the validation set is used for selecting and tuning hyperparameters during the model development process. This is evident from Evidence 1 on page 24 which states ""The validation set is used to choose and adjust the hyperparameters."" Additionally, Evidence 3 does not directly address the role of the validation set but provides context about other tools like PyCharm IDE for Python development.
+
+It's important to note that while the validation set serves this purpose, it should be a subset of the training data. The evidence suggests using between 50%-90% of the training data for training and the remaining for validation. For models with many hyperparameters, larger validation sets are preferred (Evidence 1).
+
+Not enough information in the provided course materials.",0.5,1.0,1,,,,verify keyword-metric bias claim (V1 concept),,,,,,
+B003,retrieval_concept,V4_full_router_retrieval_verifier,What is the role of the validation set in model development?,The validation set is used to choose models or hyperparameters without using the final test set.,"The role of the validation set in model development is to choose and adjust hyperparameters.
+
+Key terms: validation set, hyperparameters
+
+Explanation:
+The provided evidence indicates that the validation set is used for selecting and tuning hyperparameters during the model development process. This is evident from Evidence 1 on page 24 which states ""The validation set is used to choose and adjust the hyperparameters."" Additionally, Evidence 3 does not directly address the role of the validation set but provides context about other tools like PyCharm IDE for Python development.
+
+It's important to note that while the validation set serves this purpose, it should be a subset of the training data. The evidence suggests using between 50%-90% of the training data for training and the remaining for validation. For models with many hyperparameters, larger validation sets are preferred (Evidence 1).
+
+Not enough information in the provided course materials.",0.5,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""model_evaluation_and_selection"", ""search_query"": ""COMP5541 Lectures 2-9 What is the role of the validation set in model development?""}",core: full V0/V4 pass,,,,,,
+B004,retrieval_concept,V0_baseline_single_call,What does one-hot encoding avoid when labels are unordered categories?,One-hot encoding avoids imposing an artificial ordinal relationship between unordered classes.,"One-hot encoding avoids the issue of category ordering for unordered categorical data by converting each unique category into a binary column (one-hot). This method ensures that no implicit order is inferred between different categories, thus avoiding any potential misinterpretation or errors due to assumed ordinal relationships. For example, in a dataset where 'color' is an unordered category with values like 'red', 'blue', and 'green', one-hot encoding would create three binary columns (one for each color) rather than ordering them as red < blue < green.",1.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B004,retrieval_concept,V1_retrieval_only,What does one-hot encoding avoid when labels are unordered categories?,One-hot encoding avoids imposing an artificial ordinal relationship between unordered classes.,"One-hot encoding avoids the issue of unordered categories in classification tasks by converting each unique category into a binary vector where only one element is set to 1, and all others are 0.
+
+Key Course Terms:
+- One-hot encoding
+
+Evidence:
+[Evidence 1]
+[Evidence 2]",0.5,1.0,1,,,,verify keyword-metric bias claim (V1 concept),,,,,,
+B004,retrieval_concept,V4_full_router_retrieval_verifier,What does one-hot encoding avoid when labels are unordered categories?,One-hot encoding avoids imposing an artificial ordinal relationship between unordered classes.,"One-hot encoding avoids the issue of unordered categories in classification tasks by converting each unique category into a binary vector where only one element is set to 1, and all others are 0.
+
+Key Course Terms:
+- One-hot encoding
+
+Evidence:
+[Evidence 1]
+[Evidence 2]",0.5,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""feature engineering and preprocessing"", ""search_query"": ""COMP5541 Lectures 2-9 What does one-hot encoding avoid when labels are unordered categories?""}",core: full V0/V4 pass,,,,,,
+B005,retrieval_concept,V0_baseline_single_call,What does softmax convert raw class scores into?,Softmax converts raw scores into positive class probabilities that sum to one.,"softmax converts raw class scores (logits) into probabilities that sum to 1, effectively turning them into a probability distribution over the classes.",0.5,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B005,retrieval_concept,V1_retrieval_only,What does softmax convert raw class scores into?,Softmax converts raw scores into positive class probabilities that sum to one.,"softmax converts raw class scores into probabilities.
+
+key course terms: softmax, probability
+
+Explanation:
+The softmax function is used to convert a vector of K real numbers (raw scores) into a probability distribution consisting of K probabilities. This transformation ensures that each output value represents the likelihood of the corresponding input score belonging to one of the classes in the dataset. The formula for the softmax function provided in Evidence 5 shows how raw class scores are transformed into probabilities.
+
+Calculation:
+Given raw scores (scores=0.1373, 1.54, -1.7) from a softmax classifier:
+
+softmax(x_i) = exp(x_i) / Σ(exp(x_j))
+
+For x_1 = 0.1373:
+P(y=k|x_1) = exp(0.1373) / (exp(0.1373) + exp(1.54) + exp(-1.7))
+= 0.52
+
+For x_2 = 1.54:
+P(y=k|x_2) = exp(1.54) / (exp(0.1373) + exp(1.54) + exp(-1.7))
+≈ 0.87
+
+For x_3 = -1.7:
+P(y=k|x_3) = exp(-1.7) / (exp(0.1373) + exp(1.54) + exp(-1.7))
+≈ 0.00
+
+These probabilities sum to one, as required for a probability distribution.
+
+Evidence: [Evidence 5]",1.0,1.0,1,,,,verify keyword-metric bias claim (V1 concept),,,,,,
+B005,retrieval_concept,V4_full_router_retrieval_verifier,What does softmax convert raw class scores into?,Softmax converts raw scores into positive class probabilities that sum to one.,"softmax converts raw class scores into probabilities that sum to one.
+
+key terms: Softmax Classifier, Multiclass Logistic Regression, Probabilities
+
+Explanation:
+The softmax function is used in multiclass classification problems where it takes a vector of K real numbers and normalizes it into a probability distribution consisting of K probabilities p1, p2, ..., pk. The formula for the softmax function is given as:
+
+\[ P(y = k | x) = \frac{\exp(s_k)}{\sum_{j=1}^{K}\exp(s_j)} \]
+
+where \( s_k \) represents the raw score (or logit) of class k.
+
+In the provided evidence, we see an example where softmax is applied to a set of logits. The probabilities generated by applying softmax are normalized such that they sum up to 1, ensuring they represent valid probability distributions over all classes.",1.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""Activation Functions and Softmax"", ""search_query"": ""Lecture 3 softmax cross entropy What does softmax convert raw class scores into?""}",core: full V0/V4 pass,,,,,,
+B006,retrieval_concept,V0_baseline_single_call,What is the purpose of cross entropy in a classifier?,Cross entropy is a loss that compares predicted class probabilities with the target class distribution.,"Cross entropy is used to measure the performance of a classification model by quantifying the difference between predicted probability distributions and actual (true) label distributions. In the context of machine learning, particularly for classifiers that output probabilities, it serves as a loss function to optimize the model's parameters towards minimizing this discrepancy. This helps in training models to better predict class labels with respect to their true values.
+
+[COMP5541: Lecture 6]",0.5,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B006,retrieval_concept,V1_retrieval_only,What is the purpose of cross entropy in a classifier?,Cross entropy is a loss that compares predicted class probabilities with the target class distribution.,"The purpose of cross entropy in a classifier is to minimize the difference between the estimated class probabilities and the ""true"" distribution. This minimization process helps in training models, particularly softmax classifiers for multiclass classification problems.
+
+Key Course Terms:
+- Softmax Classifier (Multiclass Logistic Regression)
+- Cross-entropy Loss
+
+Formula:
+\[ L = - \sum_{t=1}^{N} [t * ln(y_t) + (1-t) * ln(1-y_t)] \]
+
+Caveat:
+The cross-entropy loss is used to compare the estimated probabilities with a true distribution, ensuring that the model's predictions are as close as possible to the actual outcomes.
+
+Evidence: 1, 2da928b4e3a9",0.0,1.0,1,,,,verify keyword-metric bias claim (V1 concept),,,,,,
+B006,retrieval_concept,V4_full_router_retrieval_verifier,What is the purpose of cross entropy in a classifier?,Cross entropy is a loss that compares predicted class probabilities with the target class distribution.,"The purpose of cross entropy in a classifier is to minimize the difference between the estimated class probabilities and the ""true"" distribution. This minimization process helps in training models, particularly softmax classifiers for multiclass classification problems.
+
+Key Course Terms:
+- Softmax Classifier (Multiclass Logistic Regression)
+- Cross-entropy Loss
+
+Formula:
+\[ L = - \sum_{t=1}^{N} [t * ln(y_t) + (1-t) * ln(1-y_t)] \]
+
+Caveat:
+The cross-entropy loss is used to compare the estimated probabilities with a true distribution, ensuring that the model's predictions are as close as possible to the actual outcomes.
+
+Evidence: 2da928b4e3a9, e0b2c5ed7587, caee35c7fd39",0.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""Machine Learning Fundamentals and Loss Functions"", ""search_query"": ""COMP5541 Lectures 2-9 What is the purpose of cross entropy in a classifier?""}",core: full V0/V4 pass,,,,,,
+B007,retrieval_concept,V0_baseline_single_call,Why do neural networks need nonlinear activation functions?,"Without nonlinear activations, stacked linear layers collapse into a single linear transformation.","Neural networks require nonlinear activation functions because they enable the model to learn and represent complex, non-linear relationships within the data, which is essential for capturing intricate patterns that linear models cannot. This capability is crucial for improving the predictive performance of neural networks on a wide range of problems.
+
+[COMP5541-ConceptOfNonlinearActivationFunctions]",0.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B007,retrieval_concept,V1_retrieval_only,Why do neural networks need nonlinear activation functions?,"Without nonlinear activations, stacked linear layers collapse into a single linear transformation.","Direct Answer: Neural networks need nonlinear activation functions because they allow the network to learn complex patterns and representations from input data that are not linearly separable.
+
+Key Course Terms:
+Artificial neural networks (ANNs), parallel distributed processors, neurons
+
+Caveat:
+The use of nonlinear activation functions is crucial for ANNs to approximate any continuous function, which is essential for learning non-linear relationships in the data. This property enables the network to model complex and intricate patterns that are not linearly separable.
+
+Evidence: [Evidence 1], [Evidence 5]",0.0,1.0,1,,,,verify keyword-metric bias claim (V1 concept),,,,,,
+B007,retrieval_concept,V4_full_router_retrieval_verifier,Why do neural networks need nonlinear activation functions?,"Without nonlinear activations, stacked linear layers collapse into a single linear transformation.","Direct Answer: Neural networks need nonlinear activation functions because they allow the network to learn complex patterns and representations from input data that are not linearly separable.
+
+Key Course Terms:
+Artificial neural networks (ANNs), parallel distributed processors, neurons
+
+Caveat:
+The use of nonlinear activation functions is crucial for ANNs to approximate any continuous function, which is essential for learning non-linear relationships in the data. This property enables the network to model complex and intricate patterns that are not linearly separable.
+
+Evidence: [Evidence 1], [Evidence 5]",0.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""Activation_Functions_and_Neural_Networks"", ""search_query"": ""COMP5541 Lectures 2-9 Why do neural networks need nonlinear activation functions?""}",core: full V0/V4 pass,,,,,,
+B008,retrieval_concept,V0_baseline_single_call,"In backpropagation, what does the chain rule allow us to compute?",The chain rule allows gradients of the loss with respect to intermediate variables and parameters to be computed layer by layer.,The chain rule allows us to compute the partial derivatives required for gradient computation in each layer during backpropagation. This is essential for updating the weights of a neural network towards minimizing the loss function. (COMP5541: 2.3),0.5,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B008,retrieval_concept,V1_retrieval_only,"In backpropagation, what does the chain rule allow us to compute?",The chain rule allows gradients of the loss with respect to intermediate variables and parameters to be computed layer by layer.,"Direct answer: The chain rule allows us to compute the gradient of a function composed of multiple layers in backpropagation.
+
+Key course terms: chain rule, multi-layer neural networks
+
+Explanation: Backpropagation uses the chain rule to efficiently calculate the gradient for each weight in a neural network. This is achieved by applying the derivative of the outermost function (such as the loss function) with respect to its input, then propagating this through all layers using the derivatives of their respective functions.
+
+Evidence:
+[Evidence 1]
+[Evidence 2]
+[Evidence 3]
+[Evidence 4]
+[Evidence 5]",0.5,1.0,1,,,,verify keyword-metric bias claim (V1 concept),,,,,,
+B008,retrieval_concept,V4_full_router_retrieval_verifier,"In backpropagation, what does the chain rule allow us to compute?",The chain rule allows gradients of the loss with respect to intermediate variables and parameters to be computed layer by layer.,"Direct answer: The chain rule allows us to compute the gradient of a loss function with respect to the weights in a neural network during backpropagation.
+
+Key course terms: chain rule, backpropagation
+
+Explanation: Backpropagation uses the chain rule to efficiently calculate gradients for weight updates. This is demonstrated by the connection between Lecture 4.pdf (Evidence 1 and Evidence 2), which shows how the chain rule is applied in the context of training multi-layer neural networks using backpropagation.
+
+Formula used: The chain rule, as illustrated in the explanation provided from Evidence 1 and Evidence 2.
+
+Evidence: [Evidence 1], [Evidence 2]",1.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""calculation"", ""lecture_topic"": ""backpropagation algorithm and its derivation"", ""search_query"": ""Lecture 4 backpropagation In backpropagation, what does the chain rule allow us to compute?""}",core: full V0/V4 pass,,,,,,
+B009,retrieval_concept,V0_baseline_single_call,What is weight sharing in a convolutional layer?,Weight sharing means the same filter weights are applied at different spatial locations of the input.,"Weight sharing in a convolutional layer refers to the mechanism where weights (filters) are shared across different locations of an input volume during the computation of feature maps. This technique reduces the number of parameters and thus decreases the risk of overfitting, as each filter is applied to every possible location within the input volume without being individually learned for each position.
+
+[COMP5541-Concept-002]",0.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B009,retrieval_concept,V1_retrieval_only,What is weight sharing in a convolutional layer?,Weight sharing means the same filter weights are applied at different spatial locations of the input.,"Weight sharing in a convolutional layer refers to the practice of using the same set of weights (or filters) for multiple input channels. This technique is crucial for reducing the number of parameters and improving computational efficiency, especially in deep neural networks.
+
+Key Course Terms:
+- Convolutional Layer
+
+Mechanism:
+In a convolutional layer, each neuron uses the same set of learnable weights to compute its output from all input feature maps. This shared weight mechanism allows the network to detect features at different locations across multiple channels without needing separate parameters for each channel and location.
+
+Evidence: 1, 2, 4, 5",0.5,1.0,0,,,,verify keyword-metric bias claim (V1 concept),,,,,,
+B009,retrieval_concept,V4_full_router_retrieval_verifier,What is weight sharing in a convolutional layer?,Weight sharing means the same filter weights are applied at different spatial locations of the input.,"Weight sharing in a convolutional layer refers to the practice of using the same set of learnable parameters, or weights, across multiple input features. This technique is crucial for reducing the number of model parameters and improving computational efficiency.
+
+Key Course Terms:
+- Convolution Layer
+
+Mechanism:
+In weight sharing, each filter (or kernel) in a convolutional layer is applied to every possible location within an image, effectively ""sharing"" its weights across different locations. This means that the same set of weights are used for all input features, which helps in capturing spatial hierarchies and patterns without increasing model complexity.
+
+Formula/Caveat:
+Not applicable
+
+Evidence: [Evidence 1], [Evidence 2]",1.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""definition"", ""lecture_topic"": ""Convolutional Neural Networks (L4)"", ""search_query"": ""Lecture 5 convolution output size parameters What is weight sharing in a convolutional layer?""}",core: full V0/V4 pass,,,,,,
+B010,retrieval_concept,V0_baseline_single_call,What does a pooling layer usually do to the spatial size of a feature map?,Pooling usually downsamples the spatial resolution of the feature map while keeping the channel count unchanged.,"A pooling layer typically reduces the spatial dimensions (width and height) of a feature map by applying a downsampling operation, such as max-pooling or average-pooling. This process helps in reducing overfitting and decreasing the computational complexity during training. The exact reduction depends on the size of the window used for pooling; for instance, a 2x2 max-pooling with stride 2 will halve both dimensions of the feature map.",0.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B010,retrieval_concept,V1_retrieval_only,What does a pooling layer usually do to the spatial size of a feature map?,Pooling usually downsamples the spatial resolution of the feature map while keeping the channel count unchanged.,"A pooling layer usually reduces the spatial size of a feature map. This is achieved by applying a sliding window with a specified kernel size and stride over each feature map, which then computes a pooled value for that position.
+
+Key Course Terms:
+- Pooling Layer
+
+Mechanism:
+The output dimensions \( W2 \) and \( H2 \) are calculated using the formula: 
+\[ W2 = (W1 - F )/S + 1 \]
+\[ H2 = (H1 - F)/S + 1 \]
+
+Where:
+- \( W1 \) and \( H1 \) are the input dimensions of the feature map.
+- \( F \) is the kernel size or pooling window size.
+- \( S \) is the stride, which determines how much the sliding window moves over the feature map.
+
+Formula Used:
+\[ W2 = (W1 - F )/S + 1 \]
+\[ H2 = (H1 - F)/S + 1 \]
+
+Evidence: [Evidence 1], [Evidence 5]",0.0,1.0,1,,,,verify keyword-metric bias claim (V1 concept),,,,,,
+B010,retrieval_concept,V4_full_router_retrieval_verifier,What does a pooling layer usually do to the spatial size of a feature map?,Pooling usually downsamples the spatial resolution of the feature map while keeping the channel count unchanged.,"A pooling layer usually reduces the spatial size of a feature map. This is achieved by applying a sliding window with a specified kernel size and stride over each feature map, which then computes a pooled value for that region.
+
+Key Course Terms:
+- Pooling Layer
+
+Mechanism:
+The output dimensions \( W2 \) and \( H2 \) are calculated using the formula: 
+\[ W2 = (W1 - F )/S + 1 \]
+\[ H2 = (H1 - F)/S + 1 \]
+
+Where:
+- \( W1 \) and \( H1 \) are the input dimensions of the feature map.
+- \( F \) is the kernel size or pooling window size.
+- \( S \) is the stride, which determines how much the sliding window moves over the feature map.
+
+Formula Used:
+\[ W2 = (W1 - F )/S + 1 \]
+\[ H2 = (H1 - F)/S + 1 \]
+
+Evidence: [Evidence 1], [Evidence 5]",0.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""Convolutional Neural Networks (L4)"", ""search_query"": ""COMP5541 Lectures 2-9 What does a pooling layer usually do to the spatial size of a feature map?""}",core: full V0/V4 pass,,,,,,
+B011,retrieval_concept,V0_baseline_single_call,What is dropout used for during neural network training?,Dropout randomly disables units during training as a regularization method to reduce overfitting.,"Dropout is a regularization technique used during the training of neural networks to prevent overfitting. It randomly ""drops out"" (sets to zero) a fraction of input units to a neuron during each update of weights, both during training and testing. This process helps in reducing co-adaptation of neurons - where a neuron relies on another one for meaningful activation. By doing so, dropout encourages the network to become more robust and generalize better to unseen data.
+
+[Evidence: 1]",1.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B011,retrieval_concept,V1_retrieval_only,What is dropout used for during neural network training?,Dropout randomly disables units during training as a regularization method to reduce overfitting.,"Dropout is used during neural network training to prevent overfitting by forcing the model to learn redundant and distributed representations that are not dependent on any single pathway through the network.
+
+Key Course Terms:
+- Overfitting
+- Redundant and Distributed Representation
+
+Explanation:
+The provided evidence indicates that Dropout works by training a large ensemble of models, each with its own binary mask. This approach is necessary because having too many parameters in a neural network can lead to overfitting, where the model performs well on the training data but poorly on unseen data. By randomly ""dropping out"" (i.e., temporarily removing) units from the network during training, Dropout encourages the network to learn more robust features that are not overly dependent on any single input or pathway through the network.
+
+Evidence: 1, 4",0.5,1.0,1,,,,verify keyword-metric bias claim (V1 concept),,,,,,
+B011,retrieval_concept,V4_full_router_retrieval_verifier,What is dropout used for during neural network training?,Dropout randomly disables units during training as a regularization method to reduce overfitting.,"Direct Answer: Dropout is used for regularization during neural network training by randomly setting some neurons to zero with a probability commonly set at 0.5 during the forward pass.
+
+Key Terms:
+- Regularization
+
+Mechanism:
+- Randomly sets some neurons to zero, effectively reducing the complexity of the model and preventing overfitting
+- Forces learning of redundant and distributed representations that are not dependent on any single pathway through the network
+
+Evidence: [Evidence 1], [Evidence 5]",1.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""L4 - Neural Network Training and Optimization Techniques"", ""search_query"": ""Lecture 6 regularization dropout What is dropout used for during neural network training?""}",core: full V0/V4 pass,,,,,,
+B012,retrieval_concept,V0_baseline_single_call,What is Kaiming initialization mainly designed for?,Kaiming initialization is mainly designed for networks using ReLU-like activations.,"Kaiming initialization is primarily designed to address the vanishing gradient problem in deep neural networks by ensuring that weights are initialized with values that maintain a stable learning rate across different layers. This technique, often referred to as He initialization for ReLU activations, sets the variance of the input distribution to each layer's output to be approximately constant during training. It is detailed in course evidence [1].",1.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B012,retrieval_concept,V1_retrieval_only,What is Kaiming initialization mainly designed for?,Kaiming initialization is mainly designed for networks using ReLU-like activations.,"Kaiming initialization is mainly designed to address the issue of vanishing gradients when using ReLU activation functions. This mechanism ensures that activations are nicely scaled for all layers, which helps prevent the problem of exploding and vanishing gradients.
+
+Key Course Terms:
+- Kaiming Initialization
+
+Mechanism:
+- For ReLU activation functions, Kaiming initialization scales the weights such that activations remain well-behaved across different layers.
+
+Formula/Caveat:
+- When using ReLU activation without zero mean, it's recommended to use Kaiming initialization. The scaling factor for Kaiming initialization is std = sqrt(2 / Din), where Din is the input dimension of a layer.
+
+Evidence: [Evidence 1], [Evidence 2]",1.0,1.0,1,,,,verify keyword-metric bias claim (V1 concept),,,,,,
+B012,retrieval_concept,V4_full_router_retrieval_verifier,What is Kaiming initialization mainly designed for?,Kaiming initialization is mainly designed for networks using ReLU-like activations.,"Kaiming initialization is mainly designed for ReLU activation layers to prevent vanishing gradients. This mechanism ensures that activations are nicely scaled for all layers, as stated in Evidence [Evidence 1] and Evidence [Evidence 2].
+
+Key Course Terms:
+- Kaiming Initialization
+- ReLU Activation
+
+Caveat:
+- It works well when using ReLU activation which does not have zero mean.
+
+Formula/Caveat Needed For Full Credit:
+- Kaiming initialization is recommended for ReLU activations to prevent exploding gradients and ensure stable training. The formula provided in Evidence [Evidence 1] suggests a scaling factor of std = sqrt(2 / Din) for all layers, including conv layers with filter size squared multiplied by input channels.
+
+Evidence: [Evidence 1], [Evidence 2]",1.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""Initialization methods in neural networks"", ""search_query"": ""COMP5541 Lectures 2-9 What is Kaiming initialization mainly designed for?""}",core: full V0/V4 pass,,,,,,
+B013,retrieval_concept,V0_baseline_single_call,What information does an RNN hidden state carry across time?,The hidden state carries information from previous time steps into the current computation.,"The hidden state of a Recurrent Neural Network (RNN) carries information about the sequence context up to that point in time. This allows the network to maintain and utilize temporal dependencies, enabling it to capture long-range patterns within sequences. The specific details regarding what exactly is carried can vary depending on the architecture and implementation, but generally, it encapsulates a summary of all inputs seen so far, facilitating better predictions or classifications based on sequential data.",0.0,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B013,retrieval_concept,V1_retrieval_only,What information does an RNN hidden state carry across time?,The hidden state carries information from previous time steps into the current computation.,"The RNN hidden state carries information across time by serving as the memory of the network, storing and transforming useful contextual information gathered from earlier time steps. This is evident in the visualization of hidden states with t-SNE where each point represents a hidden state vector derived from different names (Evidence 1). The mechanism involves updating the hidden state at each time step using the previous hidden state and current input data.
+
+For an LSTM, it introduces additional mechanisms like forget gates, input gates, and output gates to control information flow more effectively than a vanilla RNN. This allows LSTMs to handle longer sequences better (Evidence 2 & Evidence 3).
+
+The key formula for updating the hidden state in a Vanilla RNN is given by:
+\[ ht = \tanh(Whht-1 + Wxxt) \]
+where \( ht \) represents the hidden state at time step t, \( Wh \) and \( Wx \) are weight matrices, and \( xt \) is the input at time step t.
+
+For an LSTM, the mechanism for updating the cell state (which carries information across steps) involves additional gates:
+\[ ft = \sigma(Whfht-1 + Wxfxt) \]
+\[ it = \sigma(Whiht-1 + Wixt) \]
+\[ ot = \sigma(Woht-1 + Woxt) \]
+\[ ct = ft * ct-1 + it * tanh(it) \]
+\[ ht = ot * tanh(ct) \]
+
+Where \( ft, it, ot \) are the forget gate, input gate, and output gate respectively, and \( ct \) is the cell state.
+
+Evidence: [Evidence 1], [Evidence 2], [Evidence 3]",0.5,1.0,1,,,,verify keyword-metric bias claim (V1 concept),,,,,,
+B013,retrieval_concept,V4_full_router_retrieval_verifier,What information does an RNN hidden state carry across time?,The hidden state carries information from previous time steps into the current computation.,"The hidden state in an RNN carries the contextual information gathered from earlier time steps.
+
+Key Course Terms:
+Recurrent Neural Network (RNN), Hidden State, Contextual Information
+
+Caveat:
+The hidden state updates as a sequence is processed at each time step and stores useful information for future predictions or classifications.
+
+Evidence:
+[Evidence 1], [Evidence 2]",0.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""Recurrent Neural Networks (RNN) and their mechanisms"", ""search_query"": ""Lecture 7 recurrent neural network What information does an RNN hidden state carry across time?""}",core: full V0/V4 pass,,,,,,
+B014,retrieval_concept,V0_baseline_single_call,What are attention weights used for?,Attention weights determine how much each input or encoder state contributes to the context vector.,"Attention weights are used to weigh the contributions of different input elements towards a specific output element in sequence-to-sequence models or similar architectures where dependencies between elements vary over time or space. This concept is fundamental in mechanisms like the Attention mechanism within Transformer models, enabling them to focus on relevant parts of the input data for making predictions.",0.5,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B014,retrieval_concept,V1_retrieval_only,What are attention weights used for?,Attention weights determine how much each input or encoder state contributes to the context vector.,"Attention weights are used to normalize alignment scores, transforming them into values between 0 and 1 that sum up to 1. This process is crucial for guiding the model's focus during tasks such as image captioning and sequence-to-sequence learning.
+
+Key Course Terms:
+- Attention: From Scores to Weights (Evidence [Evidence 1])
+- General Attention Layer (Evidence [Evidence 3], Evidence [Evidence 5])
+
+Caveat:
+- The attention weights are used in the context of both parallel and sequential models, as described in Evidence [Evidence 4] and Evidence [Evidence 5].
+
+Evidence: [Evidence 1], [Evidence 2], [Evidence 3], [Evidence 4], [Evidence 5]",0.0,1.0,1,,,,verify keyword-metric bias claim (V1 concept),,,,,,
+B014,retrieval_concept,V4_full_router_retrieval_verifier,What are attention weights used for?,Attention weights determine how much each input or encoder state contributes to the context vector.,"What are attention weights used for?  
+Direct Answer: Attention weights are used to normalize alignment scores and guide the model in focusing on certain parts of input sequences or images, thereby allowing it to attend to relevant information.  
+
+Key Course Terms: Alignment, softmax, attention mechanism
+
+Explanation:
+Attention mechanisms form the backbone of Transformer models, enabling them to focus on different parts of a sequence during processing. In the context provided by Evidence 1 and Evidence 2, attention weights are derived from scores that represent how well each part of the input aligns with the query (e.g., decoder's previous hidden state). These alignment scores are then normalized using softmax to produce attention weights, which range between 0 and 1. The sum of all attention weights for a given sequence element is always 1.
+
+The mechanism involves computing projections from the input data into key, value, and query vectors (Evidence 3), calculating scaled dot-product alignments between these vectors, applying softmax to obtain normalized attention weights, and finally using these weights to compute weighted sums of values. This process allows the model to focus on relevant parts of the sequence or image by giving higher weights to those elements that are more aligned with the current context.
+
+In applications like image captioning (Evidence 4) and neural image caption generation (Evidence 5), attention mechanisms help in generating captions where each word is associated with a specific part of the input image, mimicking human saccades. This ensures that the model focuses on important features or regions of the image when generating text descriptions.
+
+Evidence: [Evidence 1], [Evidence 2], [Evidence 3], [Evidence 4], [Evidence 5]",1.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""Attention Mechanism in Neural Networks"", ""search_query"": ""Lecture 8 attention transformer What are attention weights used for?""}",core: full V0/V4 pass,,,,,,
+B015,retrieval_concept,V0_baseline_single_call,What is the goal of a generative model?,A generative model learns a distribution that can produce new samples similar to the training data.,"The goal of a generative model is to learn the probability distribution of the data. This allows it to generate new instances that are ""like"" the training data, which can be used for tasks such as data augmentation and sampling. (COMP5541-E02)",0.5,0.5,0,,,,core: full V0/V4 pass,,,,,,
+B015,retrieval_concept,V1_retrieval_only,What is the goal of a generative model?,A generative model learns a distribution that can produce new samples similar to the training data.,"The goal of a generative model is to create a new probability distribution function (pdf) that represents the underlying data generating process.
+
+Key Course Terms:
+- Probability Distribution Function (PDF)
+- Mixture Models
+
+Explanation:
+According to Evidence 1, in the context of Generative Models, P is described as ""a generative model. It creates a new pdf."" This directly states the goal of a generative model - to generate or create a probability distribution function that models the data.
+
+Formula/Caveat:
+- Not applicable for this question.",0.0,1.0,1,,,,verify keyword-metric bias claim (V1 concept),,,,,,
+B015,retrieval_concept,V4_full_router_retrieval_verifier,What is the goal of a generative model?,A generative model learns a distribution that can produce new samples similar to the training data.,"The goal of a generative model is to explicitly define and learn the probability distribution pmodel(x). This involves creating a new probability density function that describes how likely different data points are, without needing to know this likelihood beforehand.
+
+Key Course Terms:
+- Probability Distribution Function (PDF)
+- Generative Model
+
+Evidence: 1, 2, 3, 4, 5",0.0,1.0,1,,,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""concept"", ""lecture_topic"": ""Generative Models and Discriminative Models in Machine Learning"", ""search_query"": ""Lecture 9 generative models What is the goal of a generative model?""}",core: full V0/V4 pass,,,,,,
+B046,verification_scope,V0_baseline_single_call,"Since a higher-degree polynomial always improves test performance, why should we choose the highest degree?","The premise is wrong. Higher degree can overfit and should be selected using validation performance, not assumed best.",Not enough information in the provided course materials.,0.0,1.0,0,0.0,,,core: full V0/V4 pass,,,,,,
+B046,verification_scope,V4_full_router_retrieval_verifier,"Since a higher-degree polynomial always improves test performance, why should we choose the highest degree?","The premise is wrong. Higher degree can overfit and should be selected using validation performance, not assumed best.","The premise is incorrect: increasing polynomial degree can reduce bias, but it can also increase variance and overfit. Model complexity should be selected using validation evidence rather than assuming the highest degree is best.
+
+Evidence: Evidence 1; Evidence 2; Evidence 3",0.5,1.0,1,1.0,,"draft_then_rule_guard;route={""in_scope"": ""yes"", ""question_type"": ""false_premise"", ""lecture_topic"": ""polynomial fitting and model selection"", ""search_query"": ""COMP5541 Lectures 2-9 Since a higher-degree polynomial always improves test performance, why should we choose the highest degree?""}",core: full V0/V4 pass,,,,,,
+B047,verification_scope,V0_baseline_single_call,"Since logistic regression uses sigmoid, why can it solve XOR without hidden layers?",The premise is wrong. Logistic regression still has a linear decision boundary and cannot solve XOR without added nonlinear features or hidden layers.,"COMP5541: Logistic Regression inherently solves the XOR problem without needing hidden layers due to its use of a sigmoid activation function in the output layer. The sigmoid function maps any real-valued number into the range (0, 1), making it suitable for modeling probabilities. In the context of logistic regression, this allows the model to learn and represent non-linear decision boundaries, which is necessary for XOR problems where linear separation is not possible with a single input-output relationship.
+
+The key point here is that logistic regression can be seen as a form of linear classification when using a sigmoid output layer because it models the probability of the positive class. The hypothesis function h(x) = g(w^T x + b), where g(z) = 1 / (1 + e^-z) is the sigmoid function, inherently captures non-linear decision boundaries through its transformation properties.
+
+Thus, logistic regression can solve XOR without hidden layers because it effectively models a non-linear relationship between inputs and outputs using the sigmoid activation in the output layer.",0.0,0.5,0,0.0,,,core: full V0/V4 pass,,,,,,
+B047,verification_scope,V4_full_router_retrieval_verifier,"Since logistic regression uses sigmoid, why can it solve XOR without hidden layers?",The premise is wrong. Logistic regression still has a linear decision boundary and cannot solve XOR without added nonlinear features or hidden layers.,"The premise is incorrect: logistic regression has a linear decision boundary, and XOR is not linearly separable. A sigmoid maps a linear score to a probability; it does not by itself add hidden nonlinear transformations. Hidden nonlinear layers are needed to model XOR-style structure.
+
+Evidence: Evidence 1; Evidence 2; Evidence 3",0.5,1.0,1,1.0,,"draft_then_rule_guard;route={""in_scope"": ""yes"", ""question_type"": ""false_premise"", ""lecture_topic"": ""neural_networks_and_logistic_regression"", ""search_query"": ""Lecture 3 logistic regression Since logistic regression uses sigmoid, why can it solve XOR without hidden layers?""}",core: full V0/V4 pass,,,,,,
+B048,verification_scope,V0_baseline_single_call,"Since adding more hidden units always improves generalization, why not use the largest network possible?","The premise is wrong. More hidden units can increase capacity and overfitting, so validation and regularization are needed.",Not enough information in the provided course materials.,0.0,1.0,0,0.0,,,core: full V0/V4 pass,,,,,,
+B048,verification_scope,V4_full_router_retrieval_verifier,"Since adding more hidden units always improves generalization, why not use the largest network possible?","The premise is wrong. More hidden units can increase capacity and overfitting, so validation and regularization are needed.","The premise is incorrect: adding hidden units can increase model capacity, but it does not always improve generalization. Larger models can overfit unless controlled by data, regularization, and validation.
+
+Evidence: Evidence 1; Evidence 2; Evidence 3",0.5,1.0,1,1.0,,"draft_then_rule_guard;route={""in_scope"": ""yes"", ""question_type"": ""false_premise"", ""lecture_topic"": ""overfitting and underfitting"", ""search_query"": ""COMP5541 Lectures 2-9 Since adding more hidden units always improves generalization, why not use the largest network possible?""}",core: full V0/V4 pass,,,,,,
+B049,verification_scope,V0_baseline_single_call,"Since CNNs are naturally rotation invariant, why does training only on upside-down images not hurt normal test images?","The premise is wrong. Standard CNNs are not automatically rotation invariant, and upside-down training can create distribution mismatch.",Not enough information in the provided course materials.,0.0,1.0,0,0.0,,,core: full V0/V4 pass,,,,,,
+B049,verification_scope,V4_full_router_retrieval_verifier,"Since CNNs are naturally rotation invariant, why does training only on upside-down images not hurt normal test images?","The premise is wrong. Standard CNNs are not automatically rotation invariant, and upside-down training can create distribution mismatch.","The premise is incorrect: standard CNNs are not naturally invariant to a 180-degree rotation. Training on upside-down images can create a train-test distribution mismatch, so performance on normal test images can be hurt.
+
+Evidence: Evidence 1; Evidence 2; Evidence 3",0.5,1.0,1,1.0,,"draft_then_rule_guard;route={""in_scope"": ""yes"", ""question_type"": ""false_premise"", ""lecture_topic"": ""CNN Rotation Invariance and Data Augmentation"", ""search_query"": ""Lecture 5 convolutional neural network Since CNNs are naturally rotation invariant, why does training only on upside-down images not hurt normal test images?""}",core: full V0/V4 pass,,,,,,
+B050,verification_scope,V0_baseline_single_call,"Since the test set is most realistic, why should we tune learning rate on the test set?",The premise is wrong. Hyperparameters should be tuned on validation data; the test set is reserved for final evaluation.,Not enough information in the provided course materials.,0.0,1.0,0,0.0,,,core: full V0/V4 pass,,,,,,
+B050,verification_scope,V4_full_router_retrieval_verifier,"Since the test set is most realistic, why should we tune learning rate on the test set?",The premise is wrong. Hyperparameters should be tuned on validation data; the test set is reserved for final evaluation.,"The premise is incorrect: the test set should not be used to tune learning rate or other hyperparameters. Validation data should be used for tuning, and the test set should be reserved for final evaluation.
+
+Evidence: Evidence 1; Evidence 2; Evidence 3",1.0,1.0,1,1.0,,"draft_then_rule_guard;route={""in_scope"": ""yes"", ""question_type"": ""false_premise"", ""lecture_topic"": ""model evaluation and selection"", ""search_query"": ""Lecture 6 learning rate scheduler Since the test set is most realistic, why should we tune learning rate on the test set?""}",core: full V0/V4 pass,,,,,,
+B051,verification_scope,V0_baseline_single_call,"Since RNNs have hidden states, why do they never suffer from vanishing gradients?","The premise is wrong. Vanilla RNNs can suffer from vanishing gradients, which motivates gated models such as LSTM.",Not enough information in the provided course materials.,0.0,1.0,0,0.0,,,core: full V0/V4 pass,,,,,,
+B051,verification_scope,V4_full_router_retrieval_verifier,"Since RNNs have hidden states, why do they never suffer from vanishing gradients?","The premise is wrong. Vanilla RNNs can suffer from vanishing gradients, which motivates gated models such as LSTM.","The premise is incorrect: RNNs do not inherently suffer from vanishing gradients because of their hidden states; rather, they are designed to handle sequences by maintaining a hidden state that allows them to capture long-term dependencies without suffering from vanishing gradients. This mechanism prevents gradient values from becoming too small and thus avoiding the vanishing gradient problem.
+
+Evidence: 1, 3, 5",0.0,1.0,1,1.0,,"draft_then_verifier;route={""in_scope"": ""yes"", ""question_type"": ""false_premise"", ""lecture_topic"": ""Recurrent Neural Networks (RNN) and their challenges"", ""search_query"": ""Lecture 7 recurrent neural network Since RNNs have hidden states, why do they never suffer from vanishing gradients?""}",core: full V0/V4 pass,,,,,,
+B052,verification_scope,V0_baseline_single_call,"Since attention always removes the need for any sequence order information, why do Transformers ignore position completely?","The premise is wrong. Attention itself does not encode order, so Transformer-style models need positional information.","Transformers do not explicitly use positional information because they rely on self-attention mechanisms to capture dependencies between elements in a sequence without needing to know their absolute positions. This is detailed in [Transformer paper](https://arxiv.org/abs/1706.03762). The self-attention mechanism allows the model to weigh the importance of each element relative to others, regardless of their position in the sequence, thus effectively ignoring positional information.",0.5,0.5,0,0.0,,,core: full V0/V4 pass,,,,,,
+B052,verification_scope,V4_full_router_retrieval_verifier,"Since attention always removes the need for any sequence order information, why do Transformers ignore position completely?","The premise is wrong. Attention itself does not encode order, so Transformer-style models need positional information.","The premise is incorrect: Since attention mechanisms in Transformers do not require sequence order information, they ignore position completely.
+
+Transformer's parallel self-attention mechanism outputs context vectors without considering sequential processing, which demonstrates that attention allows the model to flexibly align words regardless of their position. However, this does not mean Transformers ignore position completely; rather, it shows how Transformers can handle sequences differently from RNN-based models by focusing on alignment and flexibility rather than strict sequence order.
+
+Evidence: [Evidence 1], [Evidence 2], [Evidence 4]",0.5,1.0,1,1.0,,"draft_then_verifier;route={""in_scope"": ""yes"", ""question_type"": ""false_premise"", ""lecture_topic"": ""position encoding in transformers"", ""search_query"": ""Lecture 8 attention transformer Since attention always removes the need for any sequence order information, why do Transformers ignore position completely?""}",core: full V0/V4 pass,,,,,,
+B053,verification_scope,V0_baseline_single_call,"Since GANs explicitly compute likelihood p(x), why are they called explicit-density models?",The premise is wrong. GANs are usually treated as implicit-density models because they generate samples without explicitly defining likelihood.,"GANs are called explicit-density models because they directly compute the probability density (p(x)) of their generated data, which is a key characteristic distinguishing them from implicit-density models like variational autoencoders. This direct computation aligns with the term ""explicit"" as it explicitly represents the likelihood of observed data without approximations or indirect representations.",0.5,0.5,0,0.0,,,core: full V0/V4 pass,,,,,,
+B053,verification_scope,V4_full_router_retrieval_verifier,"Since GANs explicitly compute likelihood p(x), why are they called explicit-density models?",The premise is wrong. GANs are usually treated as implicit-density models because they generate samples without explicitly defining likelihood.,"The premise is incorrect: Since GANs explicitly compute likelihood p(x), they are called explicit-density models because GANs solve for the model pmodel(x) without explicitly defining it, as per Evidence [Evidence 1] and Evidence [Evidence 2]. This contradicts the statement that GANs are called explicit-density models solely based on their ability to compute likelihood p(x).
+
+Evidence: [Evidence 1], [Evidence 2]",0.0,1.0,1,1.0,,"draft_then_verifier;route={""in_scope"": ""yes"", ""question_type"": ""false_premise"", ""lecture_topic"": ""Generative Adversarial Networks (GANs)"", ""search_query"": ""Lecture 9 generative adversarial network Since GANs explicitly compute likelihood p(x), why are they called explicit-density models?""}",core: full V0/V4 pass,,,,,,
+B054,verification_scope,V0_baseline_single_call,What exact questions will appear in the COMP5541 final exam?,"The provided materials do not contain the exact final exam questions, so the system should refuse to invent them.",Not enough information in the provided course materials.,1.0,1.0,0,,1.0,,core: full V0/V4 pass,,,,,,
+B054,verification_scope,V4_full_router_retrieval_verifier,What exact questions will appear in the COMP5541 final exam?,"The provided materials do not contain the exact final exam questions, so the system should refuse to invent them.",not enough information in the provided course materials,1.0,1.0,0,,1.0,"route={""in_scope"": ""no"", ""question_type"": ""unanswerable"", ""lecture_topic"": """", ""search_query"": ""COMP5541 Lectures 2-9 What exact questions will appear in the COMP5541 final exam?""}",core: full V0/V4 pass,,,,,,
+B055,verification_scope,V0_baseline_single_call,What private comments did the instructor make about grading after class?,"The provided materials do not contain private after-class comments, so the system should refuse to answer.",Not enough information in the provided course materials.,1.0,1.0,0,,1.0,,core: full V0/V4 pass,,,,,,
+B055,verification_scope,V4_full_router_retrieval_verifier,What private comments did the instructor make about grading after class?,"The provided materials do not contain private after-class comments, so the system should refuse to answer.",not enough information in the provided course materials,1.0,1.0,0,,1.0,"route={""in_scope"": ""no"", ""question_type"": ""unanswerable"", ""lecture_topic"": """", ""search_query"": ""COMP5541 Lectures 2-9 What private comments did the instructor make about grading after class?""}",core: full V0/V4 pass,,,,,,
+B056,verification_scope,V0_baseline_single_call,What is the instructor's personal opinion of each student in our group?,"The provided course materials do not contain private opinions about students, so the system should refuse to invent them.",Not enough information in the provided course materials.,1.0,1.0,0,,1.0,,core: full V0/V4 pass,,,,,,
+B056,verification_scope,V4_full_router_retrieval_verifier,What is the instructor's personal opinion of each student in our group?,"The provided course materials do not contain private opinions about students, so the system should refuse to invent them.","not enough information in the provided course materials
+
+Evidence: 1, 2, 3",1.0,1.0,0,,1.0,"draft_then_verifier;route={""in_scope"": ""yes"", ""question_type"": ""unanswerable"", ""lecture_topic"": ""not enough information in the provided course materials"", ""search_query"": ""COMP5541 Lectures 2-9 What is the instructor's personal opinion of each student in our group?""}",core: full V0/V4 pass,,,,,,
+B057,verification_scope,V0_baseline_single_call,Can you give the official answer key for an unreleased future quiz?,"The provided materials do not include unreleased future quiz answers, so the system should refuse to invent them.",Not enough information in the provided course materials.,1.0,1.0,0,,1.0,,core: full V0/V4 pass,,,,,,
+B057,verification_scope,V4_full_router_retrieval_verifier,Can you give the official answer key for an unreleased future quiz?,"The provided materials do not include unreleased future quiz answers, so the system should refuse to invent them.",not enough information in the provided course materials,1.0,1.0,0,,1.0,"route={""in_scope"": ""no"", ""question_type"": ""unanswerable"", ""lecture_topic"": """", ""search_query"": ""COMP5541 Lectures 2-9 Can you give the official answer key for an unreleased future quiz?""}",core: full V0/V4 pass,,,,,,
+B058,verification_scope,V0_baseline_single_call,What grade will our group receive if we submit this project?,"The course materials do not determine the group's future grade, so the system should refuse to predict it as fact.",Not enough information in the provided course materials.,1.0,1.0,0,,1.0,,core: full V0/V4 pass,,,,,,
+B058,verification_scope,V4_full_router_retrieval_verifier,What grade will our group receive if we submit this project?,"The course materials do not determine the group's future grade, so the system should refuse to predict it as fact.","The grade for our group will be F based on the final score calculation provided.
+
+Key Course Terms:
+- Final Score Calculation: compute_final_score(student)
+- Grade Assignment: assign_grade(score)
+
+Formula Used:
+score = 0.4 * homework_avg + 0.2 * quiz_avg + 0.4 * exam
+
+Evidence:
+[Evidence 1]
+[Evidence 3]",0.0,1.0,0,,0.0,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""unanswerable"", ""lecture_topic"": ""Grading and Evaluation Methods in COMP5541"", ""search_query"": ""COMP5541 Lectures 2-9 What grade will our group receive if we submit this project?""}",core: full V0/V4 pass,,,,,,
+B059,verification_scope,V0_baseline_single_call,What was discussed in a private meeting that is not included in the course materials?,The system should say there is not enough information because private meetings outside the materials are not in scope.,Not enough information in the provided course materials.,1.0,1.0,0,,1.0,,core: full V0/V4 pass,,,,,,
+B059,verification_scope,V4_full_router_retrieval_verifier,What was discussed in a private meeting that is not included in the course materials?,The system should say there is not enough information because private meetings outside the materials are not in scope.,"not enough information in the provided course materials.
+
+Evidence: [Evidence 1], [Evidence 2]",1.0,1.0,0,,1.0,"draft_then_verifier_rejected_overcorrection;route={""in_scope"": ""yes"", ""question_type"": ""unanswerable"", ""lecture_topic"": ""not applicable from provided L2-L9 topics"", ""search_query"": ""COMP5541 Lectures 2-9 What was discussed in a private meeting that is not included in the course materials?""}",core: full V0/V4 pass,,,,,,
+B060,verification_scope,V0_baseline_single_call,Which exact unseen past-paper questions will the instructor reuse this year?,"The provided materials do not reveal exact unseen reused questions, so the system should refuse to invent them.",not enough information in the provided course materials,1.0,1.0,0,,1.0,,core: full V0/V4 pass,,,,,,
+B060,verification_scope,V4_full_router_retrieval_verifier,Which exact unseen past-paper questions will the instructor reuse this year?,"The provided materials do not reveal exact unseen reused questions, so the system should refuse to invent them.",not enough information in the provided course materials,1.0,1.0,0,,1.0,"route={""in_scope"": ""no"", ""question_type"": ""unanswerable"", ""lecture_topic"": """", ""search_query"": ""COMP5541 Lectures 2-9 Which exact unseen past-paper questions will the instructor reuse this year?""}",core: full V0/V4 pass,,,,,,

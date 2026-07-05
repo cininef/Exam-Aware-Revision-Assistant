@@ -20,6 +20,28 @@ Use a 0/0.5/1 scale for each answer:
 
 ## Required Case Checks
 
+### Balanced set (primary evidence)
+
+Review every row in `records/manual_review_balanced.csv` (135 rows, generated from
+`records/results_balanced.csv`):
+
+- All 120 V0 and V4 rows — the headline comparison is fully human-checked, not sampled.
+  This includes all 8 false-premise and 7 refusal cases under V4, and every V4 row with
+  automatic correctness 0 (check: real error, or equivalent wording missed by keyword
+  scoring?).
+- The 15 `V1_retrieval_only` rows on `retrieval_concept` — these validate the report's
+  claim that V1's lower automatic correctness (0.47 vs V0's 0.53) is a keyword-metric
+  bias rather than a real quality drop.
+
+Fill the `human_*` columns (0/0.5/1 per the dimensions above) and a short
+`human_comment`. Split the rows evenly among group members.
+
+Ablation versions (A1-A4, V2, V3) are not manually scored: they enter the report only
+through version-to-version differences, where the automatic metric's systematic bias
+cancels out.
+
+### Broad set (robustness check)
+
 Review at least these cases in `records/results.csv`:
 
 - `E011`: logistic regression and XOR false premise.
