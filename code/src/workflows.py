@@ -498,5 +498,5 @@ def full_workflow(
     else:
         output = retrieval_answer(llm, retriever, question, query=query, k=k, version=version)
     output = add_route_cost(output, route_response)
-    output.notes = notes
+    output.notes = f"{output.notes};{notes}" if output.notes else notes
     return output

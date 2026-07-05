@@ -110,6 +110,99 @@ Two fixed 60-case sets. Every case has: `question`, `reference_answer` (hand-wri
 
 Design rationale: [records/evaluation_design.md](records/evaluation_design.md).
 
+## Materials Used
+
+The retrieval knowledge base is built only from the directories listed in
+[code/src/config.py](code/src/config.py): `data/raw/course_slides`,
+`data/raw/tutorials`, and `data/raw/assessment_briefs`. Files under
+`data/raw/evaluation_sources` are used to design test cases and reference answers, but
+are not the main evidence source for answering user questions. Project-brief PDFs are
+used only to understand the Track B requirements.
+
+### Retrieval Knowledge Base Files
+
+Course slides:
+
+- `data/raw/course_slides/Lecture2-2026-COMP5541(1).pdf`
+  - Used topics: KNN, non-parametric prediction, validation/test split, linear
+    regression, parameter counts, bias-variance, polynomial complexity, MSE.
+- `data/raw/course_slides/Lecture3-2026.pdf`
+  - Used topics: one-hot encoding, logistic regression, sigmoid, softmax, cross
+    entropy, L1/L2 regularization, SGD/minibatches, momentum, AdaGrad, Adam.
+- `data/raw/course_slides/Lecture 4.pdf`
+  - Used topics: neural-network motivation, linear-model limitations, nonlinear
+    activations, artificial neurons, computation graphs, chain rule,
+    backpropagation, ReLU derivative, hidden-unit capacity.
+- `data/raw/course_slides/Lecture 5.pdf`
+  - Used topics: CNN motivation, local connectivity, weight sharing, filter depth,
+    convolution output shape formula, convolution parameter count, pooling,
+    receptive field, transfer learning, CNN feature hierarchy.
+- `data/raw/course_slides/Lecture 6(2).pdf`
+  - Used topics: practical neural-network training, activation saturation, image
+    preprocessing, data augmentation, Kaiming initialization, learning rate
+    behavior, dropout, overfitting/sanity checks, validation vs test use.
+- `data/raw/course_slides/Lecture 7(1).pdf`
+  - Used topics: sequential data, RNN hidden state, parameter sharing across time,
+    encoder-decoder setup, vanilla RNN limitations, LSTM gates and cell state.
+- `data/raw/course_slides/Lecture 8(2).pdf`
+  - Used topics: attention, context vectors, attention weights, encoder-decoder
+    bottleneck, Transformer parallelism, unsupervised learning, dimensionality
+    reduction.
+- `data/raw/course_slides/Lecture 9 .pdf`
+  - Used topics: generative-model taxonomy, explicit vs implicit density,
+    PixelRNN/PixelCNN autoregressive modeling, conditional pixel generation, GAN
+    generator/discriminator setup, GAN training behavior and limitations.
+
+Tutorials:
+
+- `data/raw/tutorials/Tutorial 1-Review on Linear Algebra.pdf`
+- `data/raw/tutorials/T2-Review on Calculus.pdf`
+- `data/raw/tutorials/T3-Machine Learning Development_Q.pdf`
+- `data/raw/tutorials/T4-pytorch.pdf`
+- `data/raw/tutorials/T5_Image_Classification_with_CNNs(1).pdf`
+- `data/raw/tutorials/RNN_LSTM_Name_Classification_Tutorial (1).ipynb`
+- `data/raw/tutorials/T8_GAN_MNIST_Tutorial.ipynb`
+  - Used as supporting material for calculus/linear algebra review, ML development
+    protocol, PyTorch implementation details, CNN training, RNN/LSTM coding, and
+    DCGAN/MNIST tutorial concepts such as unsupervised GAN training and labels being
+    ignored by the adversarial objective.
+
+Assessment/context material included in the retrieval source directories:
+
+- `data/raw/assessment_briefs/COMP5541_2026_assignment.pdf`
+  - Used only as course-context evidence, not as a source of personal assignment
+    solutions.
+
+### Evaluation-Design Files
+
+These files help create evaluation questions, expected answers, and source hints:
+
+- `data/raw/evaluation_sources/COMP5541_quiz_revision_map.md`
+- `data/raw/evaluation_sources/exam.md`
+- `data/raw/evaluation_sources/quiz1.md`
+- `data/raw/evaluation_sources/quiz2.md`
+- `data/raw/evaluation_sources/quiz3.md`
+
+### Project-Requirement Files
+
+These files are read to align the submission with the Track B requirements, not used
+as answer evidence:
+
+- `data/raw/project_brief/COMP5541_Group_Project_2026.pdf`
+- `data/raw/project_brief/COMP5541_Group_Project_Slides.pdf`
+
+### Generated Text and Index Files
+
+Ingestion converts the raw materials into extracted text and page-aware chunks:
+
+- Extracted text: `data/processed/text/*.txt`
+- Retrieval chunks: `data/processed/index/chunks.jsonl`
+- Optional vector store: `data/processed/chroma/`
+
+The system does not use personal assignment reports, private notes, generated answers
+from previous runs, or files outside the official course/tutorial/project materials as
+retrieval evidence.
+
 ## Step 5: Choose the Metrics
 
 Scoring rules: [docs/scoring_rubric.md](docs/scoring_rubric.md). Automatic scoring:
@@ -162,23 +255,46 @@ workflow is measured against each ablation:
 
 ## Step 7: Analyze the Results Honestly
 
-Broad-set results (60 cases × 9 versions, `records/summary.csv`):
+Primary evidence: the balanced set, 60 cases × 9 versions
+(`records/summary_balanced.csv`). Headline (V0 → V4): correctness 0.53 → 0.58,
+faithfulness 0.63 → 0.99, citation hit 0.00 → 0.83, false-premise detection
+0.00 → 1.00, at a cost of 1 → 2.7 LLM calls and 2.7 s → 9.5 s per question.
 
-- **Retrieval (H2) is the largest single win:** correctness 0.41 → 0.49, faithfulness
-  0.61 → 0.98, citation hit 0.00 → 0.92.
-- **The verifier (H3) owns false-premise handling:** detection 0.2 without it (A2) vs
-  1.0 with it (V4).
-- **The full workflow beats the baseline:** correctness 0.59 vs 0.41 — at a cost of
-  ~2.8 LLM calls and ~6.8 s per question vs 1 call and ~2.0 s.
-- **Honest negatives:** on the broad set the router (H1) adds almost no overall
-  correctness on top of the other harnesses (A1 = 0.58 vs V4 = 0.59); its measurable
-  value is refusal accuracy (0.5 → 1.0). Automatic faithfulness barely separates
-  retrieval versions from each other. The misconception rule table covers 5 of the 8
-  balanced false-premise cases, so H3's numbers are reported with rule-covered and
-  LLM-only cases distinguished.
+Per-harness evidence:
 
-Balanced-set results (`records/results_balanced.csv`, `records/summary_balanced.csv`)
-are the primary ablation evidence; the broad set is the robustness check.
+- **H4 formula guard:** calculation correctness 0.50 (A4, guard off) → 0.70 (V4). The
+  guard fired on 7 of 15 calculation cases and got all 7 correct (1.0); the LLM
+  handled the remaining 8 at 0.44. Guard firing is recorded per case in the `notes`
+  column of `records/results_balanced.csv`.
+- **H3 verifier:** false-premise detection 0.125 without the verifier (A2) → 1.00 with
+  it (V4/V3). The misconception rule table covered 5 of the 8 false-premise cases; the
+  other 3 were caught by the verifier LLM pass alone (also 1.00), so H3 is not just a
+  lookup table. Verification-scope correctness: 0.47 (A2) → 0.63 (V4).
+- **H1 router:** refusal accuracy 0.57 (V1) → 0.71 (V2, router added) → 0.86 (V4);
+  removing the router from the full workflow drops it back to 0.71 (A1). Its overall
+  correctness effect is small — the router's job is scope control, not answer quality.
+- **H2 retrieval:** transforms verifiability — faithfulness 0.63 → 0.98 and citation
+  hit 0.00 → 0.82 (V0 → V1) — and enables every downstream harness (the verifier and
+  guards operate on retrieved evidence).
+
+Honest negatives, stated as findings:
+
+- **Auto-correctness alone slightly favors the baseline style:** V1 scores 0.47 vs
+  V0's 0.53, because keyword-based correctness rewards verbose general-knowledge
+  answers, while evidence-only answers lose points when retrieval pulls noisy chunks.
+  But V0's answers are unverifiable (faithfulness 0.63, citation 0.00) — for a
+  revision assistant, correctness must be read together with groundedness, and the
+  human sanity check covers this metric bias.
+- **V0's perfect refusal (1.00) is a system-prompt artifact:** the shared system
+  prompt already instructs refusal, and with no evidence in context the baseline
+  refuses everything unanswerable. Adding retrieved evidence actually tempts the model
+  to answer (V1 drops to 0.57); the router restores refusal to 0.86 (V4).
+- **Retrieval depth buys coverage, not raw correctness:** top-k=2 (A3) matches V4's
+  overall correctness (0.57 vs 0.58) but lowers citation hit (0.77 vs 0.83).
+
+Robustness check: on the broad course-coverage set (`records/summary.csv`) the same
+ordering holds with a larger headline gap — correctness 0.41 (V0) → 0.59 (V4),
+faithfulness 0.61 → 0.98, citation hit 0.00 → 0.95.
 
 ---
 

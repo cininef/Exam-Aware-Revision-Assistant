@@ -218,6 +218,8 @@ def call_with_retries(fn):
         except Exception as exc:  # Provider SDKs expose different exception classes.
             last_error = exc
             message = str(exc).lower()
+            if "insufficient_quota" in message or "exceeded your current quota" in message:
+                raise
             retryable = any(
                 marker in message
                 for marker in [
