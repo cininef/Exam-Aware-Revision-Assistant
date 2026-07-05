@@ -1,0 +1,10 @@
+# Course-copyrighted materials and derived text — never publish
+data/
+
+# Secrets and local config
+.env
+
+# Python / OS noise
+__pycache__/
+*.pyc
+.DS_Store

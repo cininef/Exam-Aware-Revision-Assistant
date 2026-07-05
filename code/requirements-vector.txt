@@ -1,0 +1,4 @@
+# Optional semantic vector-store backend.
+# Install only if you want RETRIEVER_BACKEND=chroma.
+-r requirements.txt
+chromadb>=0.5
