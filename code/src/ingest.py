@@ -12,13 +12,20 @@ SUPPORTED_EXTENSIONS = {".pdf", ".md", ".txt", ".ipynb"}
 
 
 def convert_pdf(path: Path) -> str:
-    result = subprocess.run(
-        ["pdftotext", "-layout", str(path), "-"],
-        check=True,
-        capture_output=True,
-        text=True,
-    )
-    return result.stdout
+    try:
+        result = subprocess.run(
+            ["pdftotext", "-layout", str(path), "-"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        return result.stdout
+    except (FileNotFoundError, subprocess.CalledProcessError):
+        from pypdf import PdfReader
+
+        reader = PdfReader(str(path))
+        pages = [page.extract_text() or "" for page in reader.pages]
+        return "\f".join(pages)
 
 
 def convert_ipynb(path: Path) -> str:
@@ -119,7 +126,17 @@ def build_chunks(max_words: int = 220, overlap: int = 45) -> list[dict[str, obje
 
 
 def main() -> None:
+    files = iter_knowledge_files()
+    if not files:
+        print("No source files found. Add course materials under:")
+        for directory in config.KNOWLEDGE_SOURCE_DIRS:
+            print(f"  - {directory}")
+        print("Supported types: .pdf, .md, .txt, .ipynb")
+        print("See docs/material_manifest.md for the expected file list.")
+        return
+
     rows = build_chunks()
+    print(f"Processed {len(files)} file(s).")
     print(f"Wrote {len(rows)} chunks to {config.CHUNKS_PATH}")
 
 

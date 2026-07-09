@@ -4,8 +4,8 @@ Track B project: design and improve a small LLM workflow, and prove with a contr
 evaluation that each added harness helps.
 
 This README walks through the Track B required steps in order and states, for each
-step, exactly what we did and where the artifact lives. Reproduction commands are at
-the end.
+step, exactly what we did and where the artifact lives. Run and reproduction commands
+are in [Reproducing the Experiments](#reproducing-the-experiments).
 
 ---
 
@@ -300,16 +300,24 @@ faithfulness 0.61 → 0.98, citation hit 0.00 → 0.95.
 
 ## Reproducing the Experiments
 
+All recorded experiments use `qwen2.5:3b` via local Ollama, temperature 0, TF-IDF
+retriever, top-k 5. A file ↔ Track B step map is in [code/README.md](code/README.md).
+
 ### 0. Setup
 
 ```bash
-cd GroupProject_ExamAware_COMP5541
 python3 -m pip install -r code/requirements.txt
 ```
 
-Requires `pdftotext` (poppler) for ingestion and a local [Ollama](https://ollama.com)
-with `ollama pull qwen2.5:3b` for the recorded run. A no-API dry run works with
-`LLM_PROVIDER=dummy`.
+Ingestion requires `pdftotext` (poppler). For real LLM answers, install
+[Ollama](https://ollama.com), pull the recorded model, and keep the server running:
+
+```bash
+ollama pull qwen2.5:3b
+ollama serve   # skip if Ollama is already running
+```
+
+Use `LLM_PROVIDER=dummy` anywhere below for a no-API UI or pipeline smoke test.
 
 ### 1. Ingest course materials
 
@@ -317,7 +325,30 @@ with `ollama pull qwen2.5:3b` for the recorded run. A no-API dry run works with
 python3 code/run_ingest.py
 ```
 
-### 2. Run the main (balanced) evaluation
+Rerun only if raw materials under `data/raw/` change.
+
+### 2. Web UI
+
+FastAPI frontend: question input, final answer, H1–H4 harness comparison, and slide
+previews ([code/app.py](code/app.py), [code/static/index.html](code/static/index.html)).
+
+```bash
+bash code/run_web.sh
+```
+
+Open **http://127.0.0.1:8000**. On first launch, `run_web.sh` copies
+[code/.env.example](code/.env.example) to `code/.env`. For local Ollama, set:
+
+```bash
+LLM_PROVIDER=ollama
+OLLAMA_MODEL=qwen2.5:3b
+OLLAMA_BASE_URL=http://localhost:11434
+```
+
+Edit `code/.env`, then restart with `bash code/run_web.sh`. Without a configured
+provider, answers fall back to `LLM_PROVIDER=dummy` placeholders.
+
+### 3. Run the main (balanced) evaluation
 
 The broad set is already run and archived (`records/results.csv`). The only remaining
 run is the balanced set, written to separate files so nothing is overwritten:
@@ -334,7 +365,14 @@ python3 run_evaluation.py \
 (To re-run the broad set: `python3 code/run_evaluation.py` with the same env vars —
 cached responses make it fast and deterministic.)
 
-### 3. Score
+Quick no-API dry run:
+
+```bash
+cd code
+LLM_PROVIDER=dummy python3 run_evaluation.py --limit 2
+```
+
+### 4. Score
 
 ```bash
 PYTHONPATH=code python3 code/score_results.py \
@@ -342,15 +380,15 @@ PYTHONPATH=code python3 code/score_results.py \
   --summary records/summary_balanced.csv
 ```
 
-### 4. Human sanity check
+### 5. Human sanity check
 
 Follow [docs/evaluation_manual_review.md](docs/evaluation_manual_review.md) on
 representative V0/V4 rows and fill `human_comment` before treating automatic scores as
 final.
 
-### 5. Optional live demo
+### 6. Streamlit demo (optional)
 
-The optional Streamlit demo wraps the same workflow in an interactive page:
+Interactive harness inspector for presentations:
 
 ```bash
 cd code
@@ -358,9 +396,14 @@ LLM_PROVIDER=ollama OLLAMA_MODEL=qwen2.5:3b TOP_K=5 TEMPERATURE=0 \
 streamlit run demo_app.py --server.port 8501
 ```
 
-The demo shows the H1 router decision, H2 retrieved slide/tutorial chunks, H4
-calculation/formula guard output when applicable, H3 verifier output, and final answer.
-Use `LLM_PROVIDER=dummy` for a fast UI-only check.
+Open **http://localhost:8501**. The page shows the H1 router decision, H2 retrieved
+slide/tutorial chunks, H4 calculation/formula guard output when applicable, H3 verifier
+output, and final answer. Fast UI-only check:
+
+```bash
+cd code
+LLM_PROVIDER=dummy streamlit run demo_app.py --server.port 8501
+```
 
 ## Model Choice and Access Record
 

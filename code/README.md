@@ -1,8 +1,9 @@
 # Code README
 
 Runnable code for the Track B experiments. The top-level [README](../README.md) explains
-the project by Track B step; this file maps those steps to code and gives the finalized
-run pipeline.
+the project by Track B step; run commands are in
+[Reproducing the Experiments](../README.md#reproducing-the-experiments). This file maps
+those steps to code.
 
 ## Code Map (file ↔ Track B step)
 
@@ -14,6 +15,8 @@ run pipeline.
 | `src/evaluate.py` | Step 6 | Runs all 9 versions on the same evaluation set; writes per-case results and a summary |
 | `score_results.py` | Step 5 | Deterministic automatic scoring (correctness / faithfulness / citation / false-premise / refusal) |
 | `demo_app.py` | Optional extension | Streamlit UI for live demo; shows H1 route, H2 retrieved slides, H4 guard result, H3 verifier, and final answer |
+| `app.py`, `static/index.html` | Optional extension | FastAPI web UI: question input, formatted final answer, H1–H4 harness comparison, slide previews |
+| `src/web_compare.py`, `src/slides.py` | Optional extension | Harness comparison runner and PDF slide page rendering for the web UI |
 | `src/llm.py` | infra | Provider clients (Ollama / Gemini / OpenAI-compatible / dummy), retries, response cache |
 | `src/config.py`, `src/utils.py` | infra | Paths and small helpers |
 | `run_ingest.py`, `run_evaluation.py`, `build_chroma.py` | entry points | Thin CLI wrappers |
@@ -57,28 +60,16 @@ Quick no-API dry run: `LLM_PROVIDER=dummy python3 code/run_evaluation.py --limit
 
 ## Optional Demo UI
 
-The project includes a Streamlit demo for the optional Track B extension. It is not a
-substitute for the evaluation records; it is a presentation aid that makes the
-harnesses inspectable.
+See [Reproducing the Experiments — Streamlit demo](../README.md#6-streamlit-demo-optional)
+in the top-level README.
+
+## Web UI (FastAPI, slide retrieval)
+
+See [Reproducing the Experiments — Web UI](../README.md#2-web-ui) in the top-level
+README. Web-only install helper (from repo root):
 
 ```bash
-cd code
-LLM_PROVIDER=ollama OLLAMA_MODEL=qwen2.5:3b TOP_K=5 TEMPERATURE=0 \
-streamlit run demo_app.py --server.port 8501
-```
-
-Open `http://localhost:8501`. The page lets a user enter a COMP5541 question and shows:
-
-- H1 router output: in-scope flag, question type, lecture topic, retrieval query.
-- H2 retrieved evidence: slide/tutorial source file, page, chunk id, score, and text.
-- H4 calculation/formula guard: deterministic answer when a parseable formula pattern is found.
-- H3 verifier/finalizer: verifier output and final answer.
-
-Fast UI check without a real model:
-
-```bash
-cd code
-LLM_PROVIDER=dummy streamlit run demo_app.py --server.port 8501
+bash code/install_web.sh
 ```
 
 ## Optional: Other Backends and Providers

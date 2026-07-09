@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>COMP5541 Slide Retrieval</title>
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --border: #e4e4e0;
+      --accent: #2f5d50;
+      --accent-hover: #244a40;
+      --accent-soft: #e8f0ed;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .layout { display: flex; min-height: 100vh; }
+
+    .panel-left {
+      flex: 4;
+      min-width: 0;
+      padding: 32px 24px 48px;
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      max-height: 100vh;
+    }
+
+    .panel-right {
+      flex: 6;
+      min-width: 0;
+      padding: 32px 28px 48px;
+      background: #f0f2f1;
+      overflow-y: auto;
+      max-height: 100vh;
+    }
+
+    h1 { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.02em; }
+    .subtitle { margin-top: 6px; font-size: 0.875rem; color: var(--muted); }
+
+    form { margin-top: 24px; display: flex; flex-direction: column; gap: 12px; }
+
+    textarea {
+      width: 100%;
+      min-height: 96px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      font: inherit;
+      font-size: 0.9375rem;
+      resize: vertical;
+      outline: none;
+    }
+
+    textarea:focus { border-color: var(--accent); }
+    .actions { display: flex; justify-content: flex-end; }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font: inherit;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    button:hover:not(:disabled) { background: var(--accent-hover); }
+    button:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    .status, .error { margin-top: 16px; font-size: 0.875rem; }
+    .status { color: var(--muted); }
+
+    .hidden { display: none !important; }
+
+    .error {
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: #fef2f2;
+      color: #991b1b;
+    }
+
+    .warn {
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: #fffbeb;
+      color: #92400e;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+
+    .ok {
+      margin-top: 16px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: #ecfdf5;
+      color: #166534;
+      font-size: 0.875rem;
+    }
+
+    #answer-box {
+      margin-top: 24px;
+      padding: 18px 20px;
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      background: var(--accent-soft);
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .answer-text, .passage-text, .harness-answer {
+      font-size: 0.9375rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .final-meta {
+      margin-top: 10px;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .route-box {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.65);
+      font-size: 0.8125rem;
+      color: var(--muted);
+    }
+
+    .sources-label { margin-top: 28px; margin-bottom: 12px; }
+
+    .passage {
+      margin-bottom: 12px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .passage:hover { border-color: #c8d5d0; }
+
+    .passage.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .passage-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .passage-text {
+      font-size: 0.9rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 6;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .right-title { font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
+    .right-subtitle { font-size: 0.8125rem; color: var(--muted); margin-bottom: 20px; }
+
+    .card {
+      margin-bottom: 20px;
+      padding: 18px 20px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+    }
+
+    .card-title {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+      color: var(--text);
+    }
+
+    .benchmark-table, .harness-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8125rem;
+    }
+
+    .benchmark-table th, .benchmark-table td,
+    .harness-table th, .harness-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .benchmark-table th, .harness-table th {
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 0.75rem;
+    }
+
+    .benchmark-table tr:last-child td,
+    .harness-table tr:last-child td { border-bottom: none; }
+
+    .highlight-row { background: #f3faf7; font-weight: 500; }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 72px 1fr 52px;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 0.8125rem;
+    }
+
+    .bar-row:last-child { margin-bottom: 0; }
+    .bar-name { color: var(--muted); }
+    .bar-track { height: 10px; border-radius: 999px; background: #e8ebe9; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #3d7a6a, var(--accent)); }
+    .bar-score { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+    .harness-card {
+      margin-bottom: 12px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fafafa;
+    }
+
+    .harness-card.final { border-color: var(--accent); background: var(--accent-soft); }
+
+    .harness-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+      font-size: 0.8125rem;
+    }
+
+    .harness-title { font-weight: 600; }
+    .harness-metrics { color: var(--muted); white-space: nowrap; }
+    .harness-desc { font-size: 0.75rem; color: var(--muted); margin-bottom: 8px; }
+
+    .harness-answer {
+      font-size: 0.875rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .slides { display: flex; flex-direction: column; gap: 18px; }
+
+    .slide-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    .slide-card.active {
+      border-color: var(--accent);
+      box-shadow: 0 4px 20px rgba(47, 93, 80, 0.12);
+    }
+
+    .slide-header {
+      padding: 12px 16px;
+      font-size: 0.8125rem;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      background: #fafafa;
+    }
+
+    .slide-image-wrap {
+      padding: 12px;
+      background: #eceeed;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 180px;
+    }
+
+    .slide-image {
+      width: 100%;
+      max-height: 420px;
+      object-fit: contain;
+      border-radius: 6px;
+      background: #fff;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .slide-loading { color: var(--muted); font-size: 0.875rem; }
+    .empty-right { margin-top: 40px; text-align: center; color: var(--muted); font-size: 0.9rem; }
+
+    .gain-pill {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #dff1ea;
+      color: #1f4f42;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    @media (max-width: 900px) {
+      .layout { flex-direction: column; }
+      .panel-left, .panel-right { flex: none; max-height: none; border-right: none; }
+      .panel-left { border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="panel-left">
+      <h1>COMP5541 Slide Retrieval</h1>
+      <p class="subtitle">Group 10</p>
+
+      <form id="form">
+        <textarea id="question" placeholder="e.g. What is the vanishing gradient problem?" required></textarea>
+        <div class="actions">
+          <button type="submit" id="submit">Search &amp; Generate</button>
+        </div>
+      </form>
+
+      <p class="status hidden" id="status">Searching and running Harness 1–4…</p>
+      <p class="ok hidden" id="llm-ok"></p>
+      <p class="warn hidden" id="llm-warn"></p>
+      <p class="error hidden" id="error"></p>
+
+      <section id="answer-box" class="hidden">
+        <p class="section-label">Final Answer · V4 Full Workflow</p>
+        <div class="answer-text" id="answer"></div>
+        <p class="final-meta" id="final-meta"></p>
+        <div class="route-box hidden" id="route-box"></div>
+      </section>
+
+      <p class="section-label sources-label hidden" id="sources-label">Source Passages</p>
+      <section id="results" class="hidden"></section>
+    </aside>
+
+    <section class="panel-right">
+      <div id="right-results" class="hidden">
+        <p class="right-title">Harness Comparison &amp; Benchmark Gains</p>
+        <p class="right-subtitle">Shows progressive H1–H4 stacking and overall gains on the evaluation set.</p>
+
+        <div class="card hidden" id="benchmark-card">
+          <p class="card-title">Evaluation Set Gains (60 cases)</p>
+          <table class="benchmark-table" id="benchmark-table"></table>
+          <span class="gain-pill hidden" id="gain-pill"></span>
+        </div>
+
+        <div class="card hidden" id="harness-metrics-card">
+          <p class="card-title">Current Question · Harness Latency</p>
+          <div id="harness-latency-bars"></div>
+        </div>
+
+        <div class="card hidden" id="harness-answers-card">
+          <p class="card-title">Current Question · Harness 1–4 Answers</p>
+          <div id="harness-answers"></div>
+        </div>
+
+        <div class="card hidden" id="charts">
+          <p class="card-title">Retrieval Score Distribution</p>
+          <div id="chart-bars"></div>
+        </div>
+
+        <div class="slides hidden" id="slides"></div>
+      </div>
+      <p class="empty-right" id="empty-right">Harness comparison and slide previews appear here after you search.</p>
+    </section>
+  </div>
+
+  <script>
+    const form = document.getElementById("form");
+    const questionEl = document.getElementById("question");
+    const submitBtn = document.getElementById("submit");
+    const statusEl = document.getElementById("status");
+    const llmOkEl = document.getElementById("llm-ok");
+    const llmWarnEl = document.getElementById("llm-warn");
+    const errorEl = document.getElementById("error");
+    const answerBoxEl = document.getElementById("answer-box");
+    const answerEl = document.getElementById("answer");
+    const finalMetaEl = document.getElementById("final-meta");
+    const routeBoxEl = document.getElementById("route-box");
+    const sourcesLabelEl = document.getElementById("sources-label");
+    const resultsEl = document.getElementById("results");
+    const benchmarkCardEl = document.getElementById("benchmark-card");
+    const benchmarkTableEl = document.getElementById("benchmark-table");
+    const gainPillEl = document.getElementById("gain-pill");
+    const harnessMetricsCardEl = document.getElementById("harness-metrics-card");
+    const harnessLatencyBarsEl = document.getElementById("harness-latency-bars");
+    const harnessAnswersCardEl = document.getElementById("harness-answers-card");
+    const harnessAnswersEl = document.getElementById("harness-answers");
+    const chartsEl = document.getElementById("charts");
+    const chartBarsEl = document.getElementById("chart-bars");
+    const slidesEl = document.getElementById("slides");
+    const rightResultsEl = document.getElementById("right-results");
+    const emptyRightEl = document.getElementById("empty-right");
+
+    let currentPassages = [];
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      resetUI();
+
+      const question = questionEl.value.trim();
+      if (!question) return;
+
+      submitBtn.disabled = true;
+      statusEl.classList.remove("hidden");
+
+      try {
+        const res = await fetch("/api/query", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.detail || "Request failed");
+
+        if (data.answer) {
+          answerEl.textContent = data.answer;
+          finalMetaEl.textContent = formatFinalMeta(data.final_metrics);
+          if (data.route) {
+            routeBoxEl.textContent = formatRoute(data.route);
+            routeBoxEl.classList.remove("hidden");
+          }
+          answerBoxEl.classList.remove("hidden");
+        }
+
+        showRightResults(data);
+
+        if (!data.passages?.length) {
+          resultsEl.innerHTML = "<p class='passage-text'>No relevant content found.</p>";
+          resultsEl.classList.remove("hidden");
+          return;
+        }
+
+        currentPassages = data.passages;
+        renderPassages(data.passages);
+        setActive(0);
+
+        sourcesLabelEl.classList.remove("hidden");
+        resultsEl.classList.remove("hidden");
+      } catch (err) {
+        errorEl.textContent = err.message || "Something went wrong";
+        errorEl.classList.remove("hidden");
+      } finally {
+        submitBtn.disabled = false;
+        statusEl.classList.add("hidden");
+      }
+    });
+
+    function resetUI() {
+      errorEl.classList.add("hidden");
+      answerBoxEl.classList.add("hidden");
+      answerEl.textContent = "";
+      finalMetaEl.textContent = "";
+      routeBoxEl.classList.add("hidden");
+      routeBoxEl.textContent = "";
+      sourcesLabelEl.classList.add("hidden");
+      resultsEl.classList.add("hidden");
+      resultsEl.innerHTML = "";
+      benchmarkCardEl.classList.add("hidden");
+      benchmarkTableEl.innerHTML = "";
+      gainPillEl.classList.add("hidden");
+      harnessMetricsCardEl.classList.add("hidden");
+      harnessLatencyBarsEl.innerHTML = "";
+      harnessAnswersCardEl.classList.add("hidden");
+      harnessAnswersEl.innerHTML = "";
+      chartsEl.classList.add("hidden");
+      chartBarsEl.innerHTML = "";
+      slidesEl.classList.add("hidden");
+      slidesEl.innerHTML = "";
+      rightResultsEl.classList.add("hidden");
+      emptyRightEl.classList.remove("hidden");
+      currentPassages = [];
+    }
+
+    function showRightResults(data) {
+      rightResultsEl.classList.remove("hidden");
+      emptyRightEl.classList.add("hidden");
+
+      if (data.benchmark?.length) renderBenchmark(data.benchmark);
+      if (data.harnesses?.length) {
+        renderHarnessLatency(data.harnesses);
+        renderHarnessAnswers(data.harnesses);
+      }
+      if (data.passages?.length) {
+        renderRetrievalCharts(data.passages);
+        renderSlides(data.passages);
+      }
+    }
+
+    function formatFinalMeta(metrics = {}) {
+      const calls = metrics.llm_calls ?? "-";
+      const latency = metrics.latency_s != null ? `${metrics.latency_s}s` : "-";
+      return `${calls} LLM call(s) · total latency ${latency}`;
+    }
+
+    function formatRoute(route) {
+      return `Router: in_scope=${route.in_scope} · type=${route.question_type} · topic=${route.lecture_topic}`;
+    }
+
+    function pct(value) {
+      return value == null ? "-" : `${(value * 100).toFixed(1)}%`;
+    }
+
+    function renderBenchmark(rows) {
+      benchmarkTableEl.innerHTML = `
+        <thead>
+          <tr>
+            <th>Harness</th>
+            <th>Correctness</th>
+            <th>Faithfulness</th>
+            <th>Citation</th>
+            <th>Latency</th>
+            <th>LLM Calls</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.map((row) => `
+            <tr class="${row.id === "H4" ? "highlight-row" : ""}">
+              <td>${escapeHtml(row.id)}</td>
+              <td>${pct(row.correctness)}</td>
+              <td>${pct(row.faithfulness)}</td>
+              <td>${pct(row.citation_hit)}</td>
+              <td>${row.avg_latency_s?.toFixed(2) ?? "-"}s</td>
+              <td>${row.avg_llm_calls?.toFixed(2) ?? "-"}</td>
+            </tr>
+          `).join("")}
+        </tbody>
+      `;
+
+      const h2 = rows.find((r) => r.id === "H2");
+      const h4 = rows.find((r) => r.id === "H4");
+      if (h2?.correctness != null && h4?.correctness != null) {
+        const gain = ((h4.correctness - h2.correctness) * 100).toFixed(1);
+        gainPillEl.textContent = `V4 correctness gain over RAG-only: +${gain} pp`;
+        gainPillEl.classList.remove("hidden");
+      }
+
+      benchmarkCardEl.classList.remove("hidden");
+    }
+
+    function renderHarnessLatency(harnesses) {
+      const maxLatency = Math.max(...harnesses.map((h) => h.latency_s), 0.001);
+      harnessLatencyBarsEl.innerHTML = harnesses.map((h) => `
+        <div class="bar-row">
+          <span class="bar-name">${escapeHtml(h.id)}</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:${(h.latency_s / maxLatency) * 100}%"></div>
+          </div>
+          <span class="bar-score">${h.latency_s.toFixed(2)}s</span>
+        </div>
+      `).join("");
+      harnessMetricsCardEl.classList.remove("hidden");
+    }
+
+    function renderHarnessAnswers(harnesses) {
+      harnessAnswersEl.innerHTML = harnesses.map((h) => `
+        <article class="harness-card ${h.id === "H4" ? "final" : ""}">
+          <div class="harness-head">
+            <span class="harness-title">${escapeHtml(h.title)}</span>
+            <span class="harness-metrics">${h.llm_calls} calls · ${h.latency_s.toFixed(2)}s</span>
+          </div>
+          <p class="harness-desc">${escapeHtml(h.description)}</p>
+          <div class="harness-answer">${escapeHtml(h.answer)}</div>
+        </article>
+      `).join("");
+      harnessAnswersCardEl.classList.remove("hidden");
+    }
+
+    function renderPassages(passages) {
+      resultsEl.innerHTML = passages.map((p, i) => `
+        <article class="passage" data-index="${i}">
+          <p class="passage-meta">Passage ${i + 1} · ${escapeHtml(p.source)} · p. ${p.page} · score ${p.score.toFixed(3)}</p>
+          <div class="passage-text">${escapeHtml(p.text)}</div>
+        </article>
+      `).join("");
+
+      resultsEl.querySelectorAll(".passage").forEach((el) => {
+        el.addEventListener("click", () => setActive(Number(el.dataset.index)));
+      });
+    }
+
+    function renderRetrievalCharts(passages) {
+      const maxScore = Math.max(...passages.map((p) => p.score), 0.001);
+      chartBarsEl.innerHTML = passages.map((p, i) => `
+        <div class="bar-row">
+          <span class="bar-name">Passage ${i + 1}</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:${(p.score / maxScore) * 100}%"></div>
+          </div>
+          <span class="bar-score">${p.score.toFixed(3)}</span>
+        </div>
+      `).join("");
+      chartsEl.classList.remove("hidden");
+    }
+
+    function slideUrl(source, page) {
+      return `/api/slide?source=${encodeURIComponent(source)}&page=${page}`;
+    }
+
+    function renderSlides(passages) {
+      const seen = new Set();
+      const unique = passages.filter((p) => {
+        const key = `${p.source}:${p.page}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+
+      slidesEl.innerHTML = unique.map((p, i) => `
+        <article class="slide-card" data-slide-index="${i}" data-source="${escapeAttr(p.source)}" data-page="${p.page}">
+          <div class="slide-header">${escapeHtml(p.source)} · p. ${p.page}</div>
+          <div class="slide-image-wrap"><p class="slide-loading">Loading slide…</p></div>
+        </article>
+      `).join("");
+
+      slidesEl.classList.remove("hidden");
+
+      unique.forEach((p, i) => {
+        const card = slidesEl.querySelector(`[data-slide-index="${i}"]`);
+        const wrap = card.querySelector(".slide-image-wrap");
+        const img = new Image();
+        img.className = "slide-image";
+        img.alt = `${p.source} page ${p.page}`;
+        img.onload = () => { wrap.innerHTML = ""; wrap.appendChild(img); };
+        img.onerror = () => { wrap.innerHTML = "<p class='slide-loading'>Failed to load slide</p>"; };
+        img.src = slideUrl(p.source, p.page);
+      });
+    }
+
+    function setActive(index) {
+      resultsEl.querySelectorAll(".passage").forEach((el, i) => {
+        el.classList.toggle("active", i === index);
+      });
+
+      const passage = currentPassages[index];
+      if (!passage) return;
+
+      slidesEl.querySelectorAll(".slide-card").forEach((card) => {
+        const match = card.dataset.source === passage.source && Number(card.dataset.page) === passage.page;
+        card.classList.toggle("active", match);
+        if (match) card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      });
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function escapeAttr(str) {
+      return String(str).replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+    }
+
+    fetch("/api/status")
+      .then((res) => res.json())
+      .then((data) => {
+        llmOkEl.classList.add("hidden");
+        llmWarnEl.classList.add("hidden");
+        if (data.ready) {
+          llmOkEl.textContent = data.message;
+          llmOkEl.classList.remove("hidden");
+          return;
+        }
+        llmWarnEl.innerHTML =
+          `${escapeHtml(data.message)}<br><br>` +
+          "Ollama example: <code>LLM_PROVIDER=ollama</code> · <code>OLLAMA_MODEL=qwen2.5:3b</code><br>" +
+          "Edit <code>code/.env</code>, then restart with <code>bash code/run_web.sh</code>.";
+        llmWarnEl.classList.remove("hidden");
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>
