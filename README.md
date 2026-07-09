@@ -348,6 +348,20 @@ Follow [docs/evaluation_manual_review.md](docs/evaluation_manual_review.md) on
 representative V0/V4 rows and fill `human_comment` before treating automatic scores as
 final.
 
+### 5. Optional live demo
+
+The optional Streamlit demo wraps the same workflow in an interactive page:
+
+```bash
+cd code
+LLM_PROVIDER=ollama OLLAMA_MODEL=qwen2.5:3b TOP_K=5 TEMPERATURE=0 \
+streamlit run demo_app.py --server.port 8501
+```
+
+The demo shows the H1 router decision, H2 retrieved slide/tutorial chunks, H4
+calculation/formula guard output when applicable, H3 verifier output, and final answer.
+Use `LLM_PROVIDER=dummy` for a fast UI-only check.
+
 ## Model Choice and Access Record
 
 All 9 workflow versions use **one model** — `qwen2.5:3b` via local Ollama API

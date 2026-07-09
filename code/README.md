@@ -13,6 +13,7 @@ run pipeline.
 | `src/workflows.py` | Steps 2-3 | `baseline()` (V0), H1 `route_question()`, H2 answer prompt, H3 `retrieval_with_verifier()` + `misconception_guard()`, H4 `calculation_guard()`, V4 `full_workflow()` with ablation switches |
 | `src/evaluate.py` | Step 6 | Runs all 9 versions on the same evaluation set; writes per-case results and a summary |
 | `score_results.py` | Step 5 | Deterministic automatic scoring (correctness / faithfulness / citation / false-premise / refusal) |
+| `demo_app.py` | Optional extension | Streamlit UI for live demo; shows H1 route, H2 retrieved slides, H4 guard result, H3 verifier, and final answer |
 | `src/llm.py` | infra | Provider clients (Ollama / Gemini / OpenAI-compatible / dummy), retries, response cache |
 | `src/config.py`, `src/utils.py` | infra | Paths and small helpers |
 | `run_ingest.py`, `run_evaluation.py`, `build_chroma.py` | entry points | Thin CLI wrappers |
@@ -53,6 +54,32 @@ already run and archived; rerunning `python3 code/run_evaluation.py` with the sa
 vars reproduces it from cache.
 
 Quick no-API dry run: `LLM_PROVIDER=dummy python3 code/run_evaluation.py --limit 2`.
+
+## Optional Demo UI
+
+The project includes a Streamlit demo for the optional Track B extension. It is not a
+substitute for the evaluation records; it is a presentation aid that makes the
+harnesses inspectable.
+
+```bash
+cd code
+LLM_PROVIDER=ollama OLLAMA_MODEL=qwen2.5:3b TOP_K=5 TEMPERATURE=0 \
+streamlit run demo_app.py --server.port 8501
+```
+
+Open `http://localhost:8501`. The page lets a user enter a COMP5541 question and shows:
+
+- H1 router output: in-scope flag, question type, lecture topic, retrieval query.
+- H2 retrieved evidence: slide/tutorial source file, page, chunk id, score, and text.
+- H4 calculation/formula guard: deterministic answer when a parseable formula pattern is found.
+- H3 verifier/finalizer: verifier output and final answer.
+
+Fast UI check without a real model:
+
+```bash
+cd code
+LLM_PROVIDER=dummy streamlit run demo_app.py --server.port 8501
+```
 
 ## Optional: Other Backends and Providers
 
